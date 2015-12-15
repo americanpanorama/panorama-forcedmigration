@@ -1,0 +1,80 @@
+.component.narrative-accordion {
+
+  h3 {
+    background:$colorGrey;
+    position:relative;
+    height:21px;
+    width:70px;
+    color:white;
+    font-family: $font-kameron;
+    font-weight: 700;
+    font-size: 16px;
+    text-align:center;
+    line-height: 21px;
+    z-index:2;
+  }
+
+  h3:after, h3:before {
+    height: 0;
+    width: 0;
+    content: "";
+    display: block;
+    position: relative;
+    z-index:1;
+  }
+
+  h3:after{
+    border-top: 21px solid $colorGrey;
+    border-right: 7px solid transparent;
+    left: 100%;
+    bottom: 21px;
+  }
+
+  ul {
+    li {
+
+      position:relative;
+      padding-right:$padding;
+      margin-right:$padding;
+      margin-bottom: 10px;
+      background-image:url("./static/expand-icon.svg");
+      background-position: 100% 7px;
+      background-size:15px;
+      background-repeat:no-repeat;
+      font-family: $font-ptserif;
+      cursor:pointer;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      h4 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+        font-weight: 400;
+        color:$colorDarkRed;
+      }
+
+      .entry-details {
+        display: block; /* Fallback for non-webkit */
+        display: -webkit-box;
+        font-size: 75%;
+        font-style: italic;
+      }
+
+      &.closed {
+
+        .entry-details {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+      }
+    }
+  }
+
+}

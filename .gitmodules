@@ -1,0 +1,3 @@
+[submodule "build"]
+	path = build
+	url = git@github.com:stamen/richmondatlas-forcedmigration.git#build

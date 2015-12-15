@@ -1,0 +1,74 @@
+.component.diverging-bar-chart {
+  position:relative;
+  height:326px;
+  overflow:hidden;
+  margin-bottom:$padding;
+
+  text {
+    font-family: sans-serif;
+    font-size: 10px;
+    fill: #666;
+  }
+  text.label {
+    font-size: 16px;
+  }
+  line {
+    stroke-width: 1px;
+    stroke: #ddd;
+  }
+  circle {
+    stroke: #333;
+  }
+  h2 {
+    margin-bottom: 0;
+    text-align: center;
+  }
+  svg {
+    margin-left: 0;
+  }
+  p {
+    text-align: center;
+  }
+  .row {
+    padding:0;
+    transition:$transitionDuration padding;
+    cursor:pointer;
+
+    &.selected {
+      font-weight:bolder;
+    }
+  }
+
+  .label {
+    position: absolute;
+  }
+
+  &.state-selected {
+    .row {
+      opacity:.3;
+      &.selected {
+        padding:3px 0;
+        font-weight:bolder;
+        background-color:$colorLightGreen;
+        color:$colorLightRed;
+        opacity:1;
+
+        text {
+          fill:$colorLightRed;
+        }
+      }
+    }
+  }
+}
+
+.diverging-chart-key {
+  text-align: center;
+
+  span {
+    font-size: 12px;
+  }
+
+  span + span {
+    margin-left: 10px;
+  }
+}

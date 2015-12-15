@@ -1,0 +1,132 @@
+@import "vendor/leaflet";
+.population-map-container {
+  position:relative;
+  width: 100%;
+  padding: 0 $padding;
+}
+.component.population-map {
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .label-layer {
+    pointer-events:none;
+    opacity:.9;
+  }
+
+  .label-layer {
+    opacity: 0.5 !important;
+  }
+
+  .leaflet-container {
+    width:100%;
+    height:100%;
+    border:solid 1px $colorLightGrey;
+    background-color: #b1b4b4;
+  }
+
+  .narrative-circle {
+    background-color: transparent;
+    width: 8px;
+    height: 10px;
+    margin-left: -4px;
+    margin-top: -10px;
+    background-image: url('./static/narrative-icon.svg');
+    cursor: pointer;
+
+    &.selected {
+      width: 15px;
+      height: 16px;
+      margin-left: -7.5px;
+      margin-top: -14px;
+      background-image: url('./static/narrative-icon-selected.svg');
+    }
+
+  }
+
+  .crop-sugar {
+    fill:$colorSugarTransparent;
+    fill-opacity:1;
+    stroke:none;
+  }
+
+  .crop-cotton {
+    fill:$colorCottonTransparent;
+    fill-opacity:1;
+    stroke:none;
+  }
+
+  .places-states {
+    fill:transparent;
+    stroke:rgba(0,0,0,0);
+    stroke-opacity:1;
+    stroke-width:1px;
+    cursor:pointer;
+    stroke-dasharray: 5, 5;
+
+    &.selected {
+      stroke:rgba(0,0,0,.7);
+      &.hide {
+        display:none;
+      }
+    }
+  }
+
+  .places-county {
+    fill:transparent;
+    stroke:rgba(0,0,0,.7);
+    cursor:pointer;
+    stroke-width:1px;
+    stroke-opacity:.7;
+
+    &.selected {
+      fill:black;
+      stroke-opacity:0;
+    }
+
+  }
+
+  .narrative-line {
+    fill:none;
+    stroke:$colorGrey;
+    fill-opacity:1;
+  }
+
+}
+
+.tab-panel {
+  .population-map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+  }
+}
+
+
+.leaflet-map-key {
+  position: relative;
+  margin: 0 0 5px 10px !important;
+  background-color: $colorLighterGreen;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+
+  .key-item:first-child {
+    margin-bottom: 5px;
+  }
+
+  span, img {
+    vertical-align: middle;
+  }
+
+  span {
+    margin-left: 5px;
+  }
+
+  img {
+    width: 65px;
+    height: 15px;
+  }
+}

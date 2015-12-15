@@ -1,0 +1,23 @@
+.component.selected-decade-display {
+  position:relative;
+  height: 52px;
+  font-family: $font-kameron;
+  margin: 0;
+  font-size: 172%;
+  text-align: center;
+  color: $colorDarkRed;
+  line-height: 1;
+
+  > div {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+  }
+
+  .little-the {
+    margin-right: 5px;
+    font-size: 50%;
+    font-family: $font-ptserif;
+  }
+}

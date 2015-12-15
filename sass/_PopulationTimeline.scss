@@ -1,0 +1,200 @@
+.population-timeline-container {
+  position:relative;
+  width:100%;
+  height: 200px;
+  margin-top: 5px;
+  padding: 0 $padding;
+  box-sizing:border-box;
+
+  .component.population-timeline {
+    width:100%;
+    box-sizing:border-box;
+    position:relative;
+    height: 100%;
+    padding-top: 34px;
+
+    .population-timeline-wrapper {
+      position:relative;
+      padding-left: 69px;
+      padding-right: 15px;
+
+      .playhead-container {
+
+        position: absolute;
+        top: -6px;
+        left:65px;
+        z-index: 20;
+
+        img {
+          height: 47px;
+        }
+      }
+
+      .labels {
+        font-size:75%;
+        position:absolute;
+        left:0;
+        top: -20px;
+        font-family: $font-sans;
+        text-align:right;
+
+        label {
+          display:block;
+          margin-bottom: 18px;
+        }
+
+        label:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .decade {
+        height:41px;
+        box-sizing:border-box;
+        display:inline-block;
+        width:10%;
+        float:left;
+        transition:$transitionDuration width;
+        cursor:pointer;
+        font-size:75%;
+        position:relative;
+        transform:translate3d(0,0,0);
+        -webkit-transform:translate3d(0,0,0);
+        background-color:$colorLightGreen;
+        z-index:1;
+
+        &:before {
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 9px 5px 0 0;
+          border-color: $colorLighterGreen transparent transparent transparent;
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 10;
+          content: "";
+        }
+
+        &:after {
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 0 7px 9px 0;
+          border-color: transparent $colorLighterGreen transparent transparent;
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 10;
+          content: "";
+        }
+
+        h3 {
+          position: absolute;
+          font-family: $font-kameron;
+          top: -34px;
+          right: -15px;
+          font-weight: 300;
+          color: black;
+          font-size: 100%;
+          transition:$transitionDuration font-size, $transitionDuration top;
+        }
+
+        h4 {
+          margin:0;
+          font-weight:300;
+          display:inline-block;
+          background-color:$colorLighterGreen;
+          position: absolute;
+          top: 46px;
+          z-index: 10;
+          left: 50%;
+          font-family: $font-kameron;
+          -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+          opacity:0;
+          transition:$transitionDuration opacity;
+          padding:0 5px;
+        }
+
+        .decade-detail {
+          opacity:0;
+          overflow:hidden;
+          position:absolute;
+          top: 53px;
+          font-family: $font-ptserif;
+          color: $colorDarkerGreen;
+          border-top:solid 2px $colorLightestGreen;
+          transition:$transitionDuration opacity;
+
+          p {
+            font-size:100%;
+            display:block;
+            width:100%;
+          }
+        }
+
+        .dot {
+          position: absolute;
+          top: 50%;
+          transform:scale(.5) translateY(-75%);
+          -webkit-transform:scale(.5) translateY(-75%);
+          background: white;
+          display: block;
+          transition:$transitionDuration transform;
+
+          &.selected {
+            background-color:black;
+          }
+        }
+        .line {
+          position: absolute;
+          height: 100%;
+          width: 1px;
+          margin-left: -0.5px;
+          background: $colorLighterGreen;
+        }
+
+        &.selected {
+          width:60%;
+          background-color:$colorDarkGreen;
+
+          h3 {
+            top: -46px;
+            right: -20px;
+            font-size: 125%;
+            font-weight: 700;
+            color: $colorDarkRed;
+          }
+
+          h4 {
+            opacity:1;
+            color: $colorDarkRed;
+          }
+
+          .decade-detail {
+            opacity:1;
+            overflow:auto;
+          }
+
+          .dot {
+            background: $colorDarkerGreen;
+            transform:scale(1) translateY(-50%);
+            -webkit-transform:scale(1) translateY(-50%);
+            opacity: 0.8;
+
+            &.selected {
+              opacity: 1;
+              background: $colorDarkBlue;
+              border:solid 2px white;
+              //box-shadow:1px 1px 1px $colorDarkBlue;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

@@ -1,0 +1,50 @@
+//
+// Spacing
+//
+$paddingSmall:10px;
+$padding:15px;
+
+//
+// Colors
+//
+$colorDarkRed: #AC3712;
+$colorLightRed: #AC3712;
+
+$colorDarkBlue: #154784;
+
+$colorBrown: #4C3A27;
+
+$colorDarkCreme: #E1D1B7;
+$colorLightCreme: #EFE0CA;
+
+$colorGrey: #292D29;
+$colorLightGrey: #b3b3b3;
+
+$colorLightestGreen: #DCDFDB;
+$colorLighterGreen: #E9EDEC;
+$colorLightGreen: #91a3a0;
+$colorDarkGreen: #6b8681;
+$colorDarkerGreen: #3a3f3a;
+
+$colorCotton: rgb(146,131,106);
+$colorSugar: rgb(118,138,102);
+$colorCottonTransparent: rgba(146,131,106,.7);
+$colorSugarTransparent: rgba(118,138,102, .7);
+
+//
+// Fonts
+//
+$font-kameron: 'Kameron', serif;
+$font-ptserif: 'PT Serif', serif;
+$font-sans: Helvetica, Arial, sans-serif;
+
+//
+// Flash and Zazz
+//
+$transitionDuration: 1s;
+
+//
+// Pull in the app styles
+//
+@import "vendor/normalize";
+@import "App";

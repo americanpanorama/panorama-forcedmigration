@@ -1,0 +1,288 @@
+@import "vendor/intro";
+@import "vendor/leaflet";
+@import "vendor/Modal";
+@import "PanoramaModal";
+
+// Not responsive... breaks below this threshold
+body {
+  min-width: 980px;
+  overflow-x: hidden;
+}
+
+.relative-container {
+  position: relative;
+}
+
+button.close {
+  border: none;
+  width: 15px;
+  height: 15px;
+  background: url(./static/close.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+button.info-icon {
+  width: 15px;
+  height: 15px;
+  border: none;
+  background: url("./static/info.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position:absolute;
+  outline: 0;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &.info-icon-map {
+    top: 10px;
+    right: 25px;
+  }
+
+  &.info-icon-legend {
+    bottom: -22px;
+    left: 4px;
+  }
+
+  &.info-icon-timeline {
+    top: 75px;
+    left: 15px;
+  }
+
+  &.info-icon-narratives {
+    top: 10px;
+    right: 10px;
+  }
+
+  &.info-icon-bubbleplot {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+button.info-icon.selected {
+  display: block !important;
+  width: 27px;
+  height: 27px;
+  background: url("./static/info-selected.svg");
+  z-index: 9999999;
+
+  &.info-icon-map {
+    top: 4px;
+    right: 19px;
+  }
+
+  &.info-icon-legend {
+    bottom: -29px;
+    left: 0;
+  }
+
+  &.info-icon-timeline {
+    top: 70px;
+    left: 9px;
+  }
+
+  &.info-icon-narratives {
+    top: 4px;
+    right: 4px;
+  }
+
+  &.info-icon-bubbleplot {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+button.enbiggen-icon {
+  position: absolute;
+  bottom: 16px;
+  right: 10px;
+  padding: 6px 10px;
+  font-size: 75%;
+  color: $colorDarkerGreen;
+  background-color:$colorLighterGreen;
+  border: none;
+  border-radius:3px;
+  z-index: 1000;
+  outline:0;
+
+  &:focus{
+    outline:0;
+  }
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    zoom: 1;
+  }
+  & > .icon {
+    margin-right: 5px;
+    width: 12px;
+    height: 12px;
+    background: transparent url("./static/enbiggen.svg");
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position: left;
+  }
+}
+
+.richmondatlas-forcedmigraton {
+  @import "PopulationMap";
+  @import "PopulationTimeline";
+  @import "CountyBubblePlot";
+  @import "DivergingBarChart";
+  @import "SelectedDecadeDisplay";
+  @import "Tabs";
+  @import "NarrativeAccordion";
+  @import "CountyOverlay";
+  @import "Legend";
+
+  @import url(http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic|Kameron:400,700|Oswald:400);
+
+  height:100vh;
+  width:100vw;
+  background-color:$colorLighterGreen;
+  border:solid $paddingSmall $colorLightGreen;
+  overflow:hidden;
+  box-sizing:border-box;
+  font-family: $font-sans;
+  font-size: 18px;
+  position: relative;
+  min-height: 700px;
+  min-width: 1px;
+  z-index:1;
+
+
+  .kameron {
+    font-family: 'Kameron', serif;
+    font-weight: 400;
+
+    &.bold {
+      font-weight: 700;
+    }
+  }
+
+  .oswald {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+  }
+
+  .pt-serif {
+    font-family: 'PT Serif', serif;
+
+    &.italic {
+      font-style: italic;
+    }
+
+    &.bold {
+      font-weight: 700;
+
+      &.italic {
+        font-style: italic;
+      }
+    }
+  }
+
+  .article-content-wrapper {
+    position:absolute;
+    top: 77px;
+    width: 100%;
+    left: 0;
+  }
+
+  .article-content-inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  article, aside, nav, section, div {
+    box-sizing:border-box;
+    vertical-align:top;
+  }
+
+  a {
+    color:$colorDarkGreen;
+  }
+
+  .about-action {
+    color:$colorDarkGreen;
+    border: none;
+    background-color: transparent;
+    font-size: 75%;
+    position: absolute;
+    top: 46px;
+    text-decoration: underline;
+  }
+
+  //
+  // Globally override leaflet styles
+  //
+  .leaflet-container {
+    .leaflet-bar a {
+      background-color:$colorGrey;
+      color:$colorLightCreme;
+    }
+  }
+
+  //
+  // Main content area
+  //
+  >article {
+    display:inline-block;
+    height:100%;
+    width:60%;
+    padding:$padding;
+    position:relative;
+    min-height:720px;
+
+    h1 {
+      margin: 0;
+
+      background-size: 384px 300px;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 52px;
+
+      margin: 0;
+      color: transparent;
+      background-image: url("./static/title.svg");
+      background-size: 300px;
+      display: block;
+
+    }
+  }
+
+  //
+  // Sidebar
+  //
+  >aside {
+    display:inline-block;
+    height:100%;
+    width:40%;
+    padding:$padding;
+  }
+
+  &.hide-narratives {
+    .narrative-circle {
+      opacity:0;
+    }
+  }
+
+  &.hide-cotton {
+    .crop-cotton {
+      opacity:0;
+    }
+  }
+
+  &.hide-sugar {
+    .crop-sugar {
+      opacity:0;
+    }
+  }
+}
+
+
+@import "introModifications";

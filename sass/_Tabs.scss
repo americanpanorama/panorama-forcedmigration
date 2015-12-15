@@ -1,0 +1,97 @@
+.component.tabs {
+  @import "vendor/tabs";
+
+  position: absolute;
+  top: 77px;
+  right: 24px;
+  width: 38%;
+  box-sizing:border-box;
+
+  .trianglything {
+
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    position:absolute;
+
+    &.top-left {
+      border-width: 5px 5px 0 0;
+      border-color: $colorLighterGreen transparent transparent transparent;
+      top:0;
+      left:0;
+    }
+
+    &.top-middle-left {
+      border-width: 0 5px 5px 0;
+      border-color: transparent $colorLighterGreen transparent transparent;
+      transform:translate(-100%);
+      top:0;
+      left:50%;
+    }
+
+    &.top-middle-right {
+      border-width: 5px 5px 0 0;
+      border-color: $colorLighterGreen transparent transparent transparent;
+      transform:translate(-100%);
+      top:0;
+      left:50%;
+      transform: translate(0);
+    }
+
+    &.top-right {
+      border-width: 0 5px 5px 0;
+      border-color: transparent $colorLighterGreen transparent transparent;
+      top:0;
+      right:0;
+    }
+
+  }
+
+  >nav {
+    width:100%;
+    box-sizing:border-box;
+    background-color: $colorLightestGreen;
+
+    >ul {
+      width:100%;
+      box-sizing:border-box;
+
+      .tabs-menu-item {
+        width:50%;
+        margin:0;
+        text-align:center;
+        padding: 9px;
+        box-sizing:border-box;
+
+        a {
+          text-decoration:none;
+          font-size: 67%;
+          font-weight: 800;
+          border-radius:3px 0 0 3px;
+          color: $colorDarkerGreen;
+
+          &:hover {
+            color:white;
+          }
+        }
+
+        &.is-active {
+          background-color:white;
+
+          a {
+            color: $colorDarkerGreen;
+          }
+        }
+      }
+    }
+  }
+
+  .tab-panel {
+    background-color:white;
+    height:100%;
+    overflow:auto;
+    box-sizing:border-box;
+    padding:0;
+    overflow-x: hidden;
+  }
+}

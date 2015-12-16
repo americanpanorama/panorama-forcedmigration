@@ -3,6 +3,8 @@ Visualizing forced migration in the antebellum American south
 
 Latest build can be viewed at [http://dsl.richmond.edu/panorama/forcedmigration/](http://dsl.richmond.edu/panorama/forcedmigration/)
 
+**NOTE: the code in this repository was developed _before_ the Panorama toolkit was complete. Therefore, it doesn't use all of the current Panorama libraries and design patterns. To see an example of a map that is built on the finalized Panorama toolkit, see [panorama-canals](https://github.com/americanpanorama/panorama-canals)**
+
 ##Data Sets
 A list of all base datasets for this project in CartoDB can be found in [data/README.md](data/README.md)
 

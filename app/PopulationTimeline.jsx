@@ -95,6 +95,12 @@ var PopulationTimeline = React.createClass({
 
     var decade = e.target.getAttribute("data-value");
 
+    // Try to get parent's decade if this element doesn't have one. Easily makes
+    // years above timeline clickable.
+    if (!decade) {
+      decade = e.target.parentElement.getAttribute('data-value');
+    }
+
     if (decade) {
       this.props.onDecadeSelect(decade);
     }

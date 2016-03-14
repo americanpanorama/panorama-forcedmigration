@@ -228,6 +228,7 @@ var PopulationTimeline = React.createClass({
       });
 
       var decadeElement = decadeElements[i];
+        decade = decadeElement.getAttribute('data-value');
 
       radius.domain([0,1, d3.max(d3.values(yearCount))]);
 
@@ -236,6 +237,7 @@ var PopulationTimeline = React.createClass({
         .data([0,1,2,3,4,5,6,7,8,9,10])
         .enter().append("div")
         .attr("class", "line")
+        .attr("data-value", decade)
         .style("left", function(d) { return ((d % 10) * 10)+3 + "%"; });
 
       d3.select(decadeElement)

@@ -354,7 +354,13 @@ var App = React.createClass({
     var narrativeElement = this.utils.parentHasClass(e.target, "narrative-item");
 
     if (narrativeElement) {
-      this.setState({selectedNarrative:narrativeElement.getAttribute("data-narrative-id")});
+      var narrativeId = narrativeElement.getAttribute('data-narrative-id');
+
+      // If narrative already selected, de-select
+      if (this.state.selectedNarrative === narrativeId) {
+        narrativeId = null;
+      }
+      this.setState({ selectedNarrative: narrativeId });
     }
   },
 

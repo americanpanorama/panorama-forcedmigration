@@ -37,7 +37,7 @@
       padding-right:$padding;
       margin-right:$padding;
       margin-bottom: 10px;
-      background-image:url("./static/expand-icon.svg");
+      background-image:url("./static/collapse-icon.svg");
       background-position: 100% 7px;
       background-size:15px;
       background-repeat:no-repeat;
@@ -63,6 +63,7 @@
       }
 
       &.closed {
+        background-image:url("./static/expand-icon.svg");
 
         .entry-details {
           overflow: hidden;

@@ -422,6 +422,7 @@ var App = React.createClass({
 
   onTimelineDecadeSelect: function(decade) {
 
+    // TODO if county no longer exists, de-select
     this.setState({"selectedDecade":decade});
 
   },

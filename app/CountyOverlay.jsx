@@ -88,7 +88,7 @@ var CountyOverlay = React.createClass({
   },
 
   getShowClass: function() {
-    if (this.props.counties) {
+    if (this.county.county_name) {
       return "show";
     } else {
       return "hide";

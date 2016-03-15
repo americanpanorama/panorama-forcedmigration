@@ -149,7 +149,10 @@ var GeoJSONLayer = React.createClass({
         featureBounds = this.layer.getBounds();
       }
 
-      if (!featureBounds.isValid()) return;
+      if (!featureBounds || !featureBounds.isValid()) {
+        this.selectedFeature = null;
+        return;
+      };
       map.setView(featureBounds.getCenter(), this.layer._map.getZoom());
 
     } else if (this.props.panIntoView && this.layer._map &&

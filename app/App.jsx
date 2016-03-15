@@ -315,10 +315,16 @@ var App = React.createClass({
   },
 
   onEachFeatureCounties: function(feature, layer) {
-
+    var className = '';
     if (feature.properties.nhgis_join === this.state.selectedCounty) {
+      className += ' selected';
+    }
+    if (feature.properties.key === this.state.selectedGeographicState) {
+      className += ' geographic-state-selected';
+    }
+    if (className) {
       layer.eachLayer(function(_layer) {
-        _layer.options.className = "selected";
+        _layer.options.className += className;
       });
     }
   },
@@ -340,13 +346,18 @@ var App = React.createClass({
     PopulationActions.selectCounty(e.feature.properties.nhgis_join, e.feature.properties.key, this.state.selectedDecade);
   },
 
-  onGeographicStateClick: function(e) {
+  onGeographicStateClick: function(e, event) {
 
     e.eachLayer(function(_layer) {
       _layer.options.className += "selected";
     });
 
     PopulationActions.selectGeographicState(e.feature.properties.key, this.state.selectedDecade);
+    // TODO find the county you would have clicked on + select that too
+    // TODO if not already the case, always have counties on the map with no
+    // border?
+    // TODO simulate a second click after selectGeographicState?
+    var latlng = event.latlng;
 
   },
 
@@ -564,7 +575,7 @@ var App = React.createClass({
       cottonAvailable = includes(crops, 'cotton'),
       sugarAvailable = includes(crops, 'sugar');
     var stateFeatures = PlacesStore.getGeographicStatesFilteredByDecade(this.state.selectedDecade);
-    var countyFeatures = PlacesStore.getCountyShapesByDecadeAndGeographicState(this.state.selectedDecade, this.state.selectedGeographicState);
+    var countyFeatures = PlacesStore.getCountyShapesByDecade(this.state.selectedDecade);
     var narrativeFeatures = (this.state.show_narratives) ? NarrativesStore.getNarrativesFilteredByDecade(this.state.selectedDecade) : {features:[]};
 
     return (

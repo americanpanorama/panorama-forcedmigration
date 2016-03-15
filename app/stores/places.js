@@ -22,7 +22,7 @@ var data = {
 
 var dataCache = {
   getGeographicStatesFilteredByDecade:null,
-  getCountyShapesByDecadeAndGeographicState:null,
+  getCountyShapesByDecade:null,
   getCountyMetadataById:{},
   getCountyBubbleById:{},
   statesByDecade: {}
@@ -146,6 +146,22 @@ function getInitialData() {
   });
 }
 
+function selectDecade(decade) {
+  var _state = { decade: decade };
+
+  if (!data.countyShapes[decade]) {
+    data.countyShapes[decade] = { fetching: true, data: null };
+    dslClient.sqlRequest(COUNTY_SHAPE_QUERY + " WHERE year = '" + (parseInt(decade)+10) + "'", function(error, response) {
+      data.countyShapes[decade].fetching = false;
+      data.countyShapes[decade].data = response;
+      PlacesStore.emitChange(_state);
+    }, {"format":"GEOJSON"});
+  }
+  else {
+    PlacesStore.emitChange(_state);
+  }
+}
+
 function selectGeographicState(geographicState, decade, statePassthrough) {
   var _state = statePassthrough || {};
   _state["selectedGeographicState"] = geographicState;
@@ -225,24 +241,23 @@ var PlacesStore = assign({}, EventEmitter.prototype, {
 
   },
 
-  getCountyShapesByDecadeAndGeographicState: function(decade, geographicState) {
-    if (decade && geographicState) {
+  getCountyShapesByDecade: function(decade) {
+    if (decade) {
       var data = PlacesStore.getData();
-
-      if (data.countyShapes[decade] && data.countyShapes[decade][geographicState] && data.countyShapes[decade][geographicState].data) {
-        return data.countyShapes[decade][geographicState].data;
-
-      } else {
-        if (data.countyShapes[decade] && data.countyShapes[decade][geographicState] && data.countyShapes[decade][geographicState].fetching) return {features:[]};
-        selectGeographicState(geographicState, decade)
-        return {features:[]};
+      if (data.countyShapes[decade] && data.countyShapes[decade].data) {
+        return data.countyShapes[decade].data;
       }
-    } else {
-
-      return {features:[]};
-
+      else {
+        if (data.countyShapes[decade] && data.countyShapes[decade].fetching) {
+          return { features:[] };
+        }
+        selectDecade(decade);
+        return { features:[] };
+      }
     }
-
+    else {
+      return { features:[] };
+    }
   },
 
   getCountyMetadataById: function(id /*nhgis_join*/) {

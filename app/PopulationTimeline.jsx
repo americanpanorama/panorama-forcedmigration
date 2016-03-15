@@ -139,8 +139,13 @@ var PopulationTimeline = React.createClass({
 
     var offset = 6;
     var decadeElement = this.getDOMNode().querySelector(".decade-" + this.props.selectedDecade);
-    var playheadElement = this.getDOMNode().querySelector(".playhead-container");
-    playheadElement.style.left = ((decadeElement.offsetLeft + decadeElement.offsetWidth)-offset) + "px";
+
+    // Only snap to right end of decade if we're not moving the playhead--else
+    // it flickers back and forth
+    if (!this.state.moving) {
+      var playheadElement = this.getDOMNode().querySelector(".playhead-container");
+      playheadElement.style.left = ((decadeElement.offsetLeft + decadeElement.offsetWidth)-offset) + "px";
+    }
 
   },
 
@@ -178,6 +183,7 @@ var PopulationTimeline = React.createClass({
 
       interact(decadeElements[i]).dropzone({
         accept: ".playhead-container",
+        overlap: 0.5,
         ondrop: function(e) {
           that.props.onDecadeSelect(e.target.getAttribute("data-value"));
         },

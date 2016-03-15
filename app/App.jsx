@@ -583,7 +583,7 @@ var App = React.createClass({
                     location={this.initialMapState.coords}
                     zoom={this.initialMapState.zoom}
                     mapMoveEndHandler={this.mapMoveHandler}
-                    mapOptions={{attributionControl:false}}>
+                    mapOptions={{attributionControl:false, scrollWheelZoom: true}}>
                     <CartoTileLayer
                       zIndex={20}
                       src="http://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png"

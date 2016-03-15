@@ -37,6 +37,7 @@ var Modal                 = require('react-modal');
 var Legend                = require('./Legend.jsx');
 var PanoramaNav           = require('./PanoramaNavigation.jsx');
 var throttle              = require('lodash.throttle');
+var includes              = require('lodash.includes');
 
 var App = React.createClass({
 
@@ -550,7 +551,12 @@ var App = React.createClass({
   },
 
   render: function() {
-    var cropFeatures = CropsStore.getCropsByDecade(this.state.selectedDecade);
+    var cropFeatures = CropsStore.getCropsByDecade(this.state.selectedDecade),
+      crops = cropFeatures.features.map(function (feature) {
+        return feature.properties.crop;
+      }),
+      cottonAvailable = includes(crops, 'cotton'),
+      sugarAvailable = includes(crops, 'sugar');
     var stateFeatures = PlacesStore.getGeographicStatesFilteredByDecade(this.state.selectedDecade);
     var countyFeatures = PlacesStore.getCountyShapesByDecadeAndGeographicState(this.state.selectedDecade, this.state.selectedGeographicState);
     var narrativeFeatures = (this.state.show_narratives) ? NarrativesStore.getNarrativesFilteredByDecade(this.state.selectedDecade) : {features:[]};
@@ -604,7 +610,7 @@ var App = React.createClass({
 
                 <div className="map-legend-wrapper">
                   <button className="info-icon info-icon-legend" data-step="2" onClick={this.openIntro} />
-                  <Legend narratives={this.state.show_narratives} cotton={this.state.show_cotton} sugar={this.state.show_sugar} onClick={this.onLegendClick} />
+                  <Legend narratives={this.state.show_narratives} cotton={cottonAvailable && this.state.show_cotton} sugar={sugarAvailable && this.state.show_sugar} onClick={this.onLegendClick} />
                 </div>
 
                 <button className="info-icon info-icon-map" data-step="0" onClick={this.openIntro} />

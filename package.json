@@ -51,6 +51,7 @@
     "jshint-stylish": "~1.0.0",
     "leaflet": "^0.7.3",
     "leaflet-circles-2": "stamen/leaflet-circles-2.git",
+    "lodash.includes": "^4.1.1",
     "lodash.throttle": "^3.0.4",
     "main-bower-files": "~2.5.0",
     "numeral": "^1.5.3",

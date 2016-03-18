@@ -276,29 +276,29 @@ var DivergingBarChart = React.createClass({
 
     this.updateBarScale(year);
 
-
-    if (that.row) {
-      that.row.selectAll("rect.inmigrations")
+    var rows = d3.select(this.getDOMNode()).selectAll('.row');
+    if (rows) {
+      rows.selectAll("rect.inmigrations")
         .transition()
         .duration(700)
         .style("fill", that.color.range()[0])
         .attr("x", function(d) { return that.barMidPoint-that.barwidth(d[year].inmigrations); })
         .attr("width", function(d) { return that.barwidth(d[year].inmigrations); });
 
-      that.row.selectAll("rect.outmigrations")
+      rows.selectAll("rect.outmigrations")
         .transition()
         .duration(700)
         .style("fill", that.color.range()[1])
         .attr("x", function(d) { return that.barMidPoint; })
         .attr("width", function(d) { return that.barwidth(d[year].outmigrations); });
 
-      that.row.selectAll("text.outmigrations")
+      rows.selectAll("text.outmigrations")
         .transition()
         .duration(700)
         .attr("dx", function(d) { return that.barMidPoint + that.barwidth(d[year].outmigrations) + 4; })
         .text(function(d) { return that.format(d[year].outmigrations); });
 
-      that.row.selectAll("text.inmigrations")
+      rows.selectAll("text.inmigrations")
         .transition()
         .duration(700)
         .attr("dx", function(d) { return that.barMidPoint - that.barwidth(d[year].inmigrations) - 4; })

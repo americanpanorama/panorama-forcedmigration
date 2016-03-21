@@ -48,7 +48,7 @@ var PanoramaNavigation = React.createClass({
 						{
 							this.props.nav_data.map(function(item, i) {
 								return (
-									<div className='pan_nav_item' style={{width: that.computeDimensions() + 'px'}}>
+									<div className='pan_nav_item' key={'pan_nav' + i} style={{width: that.computeDimensions() + 'px'}}>
 										<a href={ item.url }><img src={ item.screenshot } style={{width: that.computeDimensions() + 'px'}} /></a><br/>
 										<h4>
 											<a href={ item.url }>{ item.title }</a>

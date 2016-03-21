@@ -72,8 +72,10 @@ var NarrativeAccordion = React.createClass({
 
       if (parseInt(narrativeElements[i].getAttribute("data-narrative-id")) === parseInt(this.props.selectedNarrative)) {
         narrativeElements[i].classList.remove("closed");
+        narrativeElements[i].classList.add("selected");
       } else {
         narrativeElements[i].classList.add("closed");
+        narrativeElements[i].classList.remove("selected");
       }
 
     }
@@ -106,6 +108,7 @@ var NarrativeAccordion = React.createClass({
             <li key={i} className={"narrative-item closed narrative-item-"+item.properties.narrative_id} data-narrative-id={item.properties.narrative_id} onClick={that.props.onClick}>
               <h4 className="entry-title">{that.displayAuthorName(item.properties.name)}</h4>
               <div className="entry-details">{item.properties.description}</div>
+              <div className="citation"><a href={item.properties.link} dangerouslySetInnerHTML={{__html: item.properties.source}} /></div>
             </li>
           )
 

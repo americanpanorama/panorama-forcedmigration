@@ -578,7 +578,7 @@ var App = React.createClass({
     var stateFeatures = PlacesStore.getGeographicStatesFilteredByDecade(this.state.selectedDecade);
     var countyFeatures = PlacesStore.getCountyShapesByDecade(this.state.selectedDecade);
     var narrativeFeatures = (this.state.show_narratives) ? NarrativesStore.getNarrativesFilteredByDecade(this.state.selectedDecade) : {features:[]};
-
+    
     return (
       <div className={this.getRichmondContainerClass()} style={{height: this.heights.app + 'px'}} >
 
@@ -727,7 +727,7 @@ var App = React.createClass({
 
           <p>We have not made any effort to account for manumissions or escapes. The number of enslaved people who were freed through escape or some other means were, relative to the size of in-migrations and out-migrations, modest. That said, escapes and manumissions were more prevalent on the north border of the slave South in places like Maryland and Delaware. The out-migrations visible on the map in those places might be very modestly exaggerated.</p>
 
-          <p>The parishes in Louisiana where sugar was cultivated present an exceptional case. The mortality rate was higher and the fertility rate lower on sugar plantations. We have used historian Michael Tadman's estimate of 6.5% growth rate in our calculations (Tadman, 69). As Tadman emphasizes, even that 6.5% growth rate might to too high, so the in-migrations (almost all importations) in southern Louisiana may very well be underestimated on the map.</p>
+          <p>The parishes in Louisiana where sugar was cultivated present an exceptional case. The mortality rate was higher and the fertility rate lower on sugar plantations. We have used historian Michael Tadman's estimate of 6.5% growth rate in our calculations (Tadman, 69). As Tadman emphasizes, even that 6.5% growth rate might be too high, so the in-migrations (almost all importations) in southern Louisiana may very well be underestimated on the map.</p>
 
           <p>The data we use for population, cotton, and sugar comes from the <a href="http://www.nhgis.org">Minnesota Population Center, National Historical Geographic Information System: Version 2.0 (Minneapolis, Minn.: University of Minnesota 2011)</a>. State boundaries are from the Newberry Library's <a href="http://publications.newberry.org/ahcbp/">Atlas of Historical County Boundaries</a>.</p>
 

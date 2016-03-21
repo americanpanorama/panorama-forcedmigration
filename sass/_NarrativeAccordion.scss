@@ -59,7 +59,7 @@
         display: block; /* Fallback for non-webkit */
         display: -webkit-box;
         font-size: 75%;
-        font-style: italic;
+        /* font-style: italic; */
       }
 
       &.closed {
@@ -72,6 +72,35 @@
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        .citation {
+          display: none;
+        }
+
+      }
+
+      &.selected {
+
+        .entry-details {
+          font-size: 90%;
+          line-height: 1.6;
+        }
+
+        h4 {
+          border-bottom: 1px solid $colorLightRed;
+          font-size: 110%;
+          margin-bottom: $padding;
+        }
+
+        .citation {
+          display: block;
+          margin-top: 20px;
+          font-size: 75%;
+
+          a {
+            text-decoration: none;
+          }
         }
 
       }

@@ -34,7 +34,7 @@
         font-size:75%;
         position:absolute;
         left:0;
-        top: -20px;
+        top: 15px;
         font-family: $font-sans;
         text-align:right;
 
@@ -62,6 +62,7 @@
         -webkit-transform:translate3d(0,0,0);
         background-color:$colorLightGreen;
         z-index:1;
+        cursor: pointer;
 
         &:before {
           width: 0;
@@ -95,38 +96,24 @@
           position: absolute;
           font-family: $font-kameron;
           top: -34px;
-          right: -15px;
+          right: -webkit-calc(50% - 15px);
+          right:    -moz-calc(50% - 15px);
+          right:         calc(50% - 15px);
+          /* right: 50%; */
           font-weight: 300;
           color: black;
           font-size: 100%;
           transition:$transitionDuration font-size, $transitionDuration top;
-        }
-
-        h4 {
-          margin:0;
-          font-weight:300;
-          display:inline-block;
-          background-color:$colorLighterGreen;
-          position: absolute;
-          top: 46px;
-          z-index: 10;
-          left: 50%;
-          font-family: $font-kameron;
-          -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-          opacity:0;
-          transition:$transitionDuration opacity;
-          padding:0 5px;
+          cursor: pointer;
         }
 
         .decade-detail {
           opacity:0;
           overflow:hidden;
           position:absolute;
-          top: 53px;
+          top: 30px;
           font-family: $font-ptserif;
           color: $colorDarkerGreen;
-          border-top:solid 2px $colorLightestGreen;
           transition:$transitionDuration opacity;
 
           p {
@@ -163,14 +150,11 @@
 
           h3 {
             top: -46px;
-            right: -20px;
+            right: -webkit-calc(50% - 20px);
+            right:    -moz-calc(50% - 20px);
+            right:         calc(50% - 20px);
             font-size: 125%;
             font-weight: 700;
-            color: $colorDarkRed;
-          }
-
-          h4 {
-            opacity:1;
             color: $colorDarkRed;
           }
 

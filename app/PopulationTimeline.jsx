@@ -277,36 +277,31 @@ var PopulationTimeline = React.createClass({
       <div className="component population-timeline" onClick={this._onClick}>
         <div className="population-timeline-wrapper">
           <div className="decade decade-1810 selected" data-value="1810">
-            <h3>1820</h3>
-            <h4>1810s</h4>
+            <h3>1810s</h3>
             <div className="decade-detail">
               <p>Planter migrations and the slave trade accelerated as American slaveowners consolidated control over the lower Mississippi Valley by suppressing a slave revolt in 1811 and ending any threats to U.S. sovereignty in the region through the War of 1812. (Note: cotton and sugar data is not available for this decade.)</p>
             </div>
           </div>
           <div className="decade decade-1820" data-value="1820">
-            <h3>1830</h3>
-            <h4>1820s</h4>
+            <h3>1820s</h3>
             <div className="decade-detail">
               <p>Enslaved people were moved to an expanding slavery frontier as lands in Mississippi and Georgia were ceded by the Choctaw and seized from the Cherokee. The Missouri Compromise grew the slave frontier while setting a limit to future expansion. (Note: cotton and sugar data is not available for this decade.)</p>
             </div>
           </div>
           <div className="decade decade-1830" data-value="1830">
-            <h3>1840</h3>
-            <h4>1830s</h4>
+            <h3>1830s</h3>
             <div className="decade-detail">
               <p>More enslaved people—nearly 300,000—were moved during the 1830s than any other decade as planters sought to enrich themselves by growing massive amounts of cotton for the Atlantic market, much of it on lands seized from Native Americans. </p>
             </div>
           </div>
           <div className="decade decade-1840" data-value="1840">
-            <h3>1850</h3>
-            <h4>1840s</h4>
+            <h3>1840s</h3>
             <div className="decade-detail">
               <p>In 1845, slaveholders secured new lands for slavery's expansion by annexing Texas. Yet overall the intensity of slave trading slowed amid the lengthy economic depression that followed the Panic of 1837, when the speculative bubble in cotton burst. </p>
             </div>
           </div>
           <div className="decade decade-1850" data-value="1850">
-            <h3>1860</h3>
-            <h4>1850s</h4>
+            <h3>1850s</h3>
             <div className="decade-detail">
               <p>The slave trade reintensified with the resurgence of the world cotton market in the 1850s. Slaveowners in areas like Natchez and the Black Belt that had been settled decades earlier sold bondspeople to their counterparts in Texas and Arkansas.</p>
             </div>
@@ -315,7 +310,6 @@ var PopulationTimeline = React.createClass({
             <img src="./static/playhead.svg" />
           </div>
           <div className="labels">
-            <label className="census">Census</label>
             <label className="narratives">Narratives</label>
           </div>
         </div>

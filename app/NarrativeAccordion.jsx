@@ -36,7 +36,7 @@ function naturalSort(a, b, column) {
            oFyNcL += '';
        }
        if (oFxNcL < oFyNcL) return -1;
-       if (oFxNcL > oFyNcL) return 1;
+       if (oFxNcL > oFyNcL) return 1; 
    }
    return 0;
 }

@@ -32,15 +32,38 @@
     height: 10px;
     margin-left: -4px;
     margin-top: -10px;
+    background-size: cover;
     background-image: url('./static/narrative-icon.svg');
     cursor: pointer;
 
-    &.selected {
-      width: 15px;
-      height: 16px;
-      margin-left: -7.5px;
-      margin-top: -14px;
+    $sizeMultiplier: 2;
+
+    // scale up the markers at zoom level 7 and above
+    @for $zoom from 7 through 20 {
+      &.zoom#{$zoom} {
+        width: 8px + ($zoom - 6) * 6;
+        height: 10px + ($zoom - 6) * 7.5;
+        margin-left: -4px + ($zoom - 6) * 6;
+        margin-top: -10px + ($zoom - 6) * 7.5;
+      }
+    }
+
+    &.selected{
       background-image: url('./static/narrative-icon-selected.svg');
+      width: 30px;
+      height: 32px;
+      margin-left: -15px;
+      margin-top: -32px;
+      
+      @for $zoom from 7 through 20 {
+        &.zoom#{$zoom} {
+          width: 30px + ($zoom - 6) * 7.5;
+          height: 32px + ($zoom - 6) * 8;
+          margin-left: -15px + ($zoom - 6) * 7.5;
+          margin-top: -32px + ($zoom - 6) * 8;
+        }
+      }
+
     }
 
   }

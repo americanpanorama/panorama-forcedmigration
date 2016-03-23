@@ -5,7 +5,7 @@ var dslClient     = require("../lib/dslClient");
 var AppActions    = require("../actions/app");
 
 var CHANGE_EVENT = "change";
-var QUERY        = "SELECT * FROM narrative_site_location_materialized";
+var QUERY        = "SELECT * FROM site_narratives_materialized";
 
 var state = {
   dataLoaded:     false

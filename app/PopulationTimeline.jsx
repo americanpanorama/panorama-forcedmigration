@@ -22,9 +22,6 @@ var PopulationTimeline = React.createClass({
       this.drawNarrativeForDecade(this.props.selectedDecade);
     }
 
-    this.initPlayhead();
-
-    this.onWindowResizeCallback = this.utils.debounce(this.updatePlayheadPosition, 10);
     window.addEventListener("resize", this.onWindowResizeCallback);
 
   },
@@ -47,8 +44,6 @@ var PopulationTimeline = React.createClass({
   },
 
   animationStep: function(timestamp) {
-
-    this.updatePlayheadPosition();
 
     if (this.trackAnimation) {
       window.requestAnimationFrame(this.animationStep);
@@ -128,79 +123,6 @@ var PopulationTimeline = React.createClass({
       var decadeElement = this.getDOMNode().querySelector(".decade-" + decade);
 
       decadeElement.classList.add("selected");
-
-      this.updatePlayheadPosition();
-
-    }
-
-  },
-
-  updatePlayheadPosition: function() {
-
-    var offset = 6;
-    var decadeElement = this.getDOMNode().querySelector(".decade-" + this.props.selectedDecade);
-
-    // Only snap to right end of decade if we're not moving the playhead--else
-    // it flickers back and forth
-    if (!this.state.moving) {
-      var playheadElement = this.getDOMNode().querySelector(".playhead-container");
-      playheadElement.style.left = ((decadeElement.offsetLeft + decadeElement.offsetWidth)-offset) + "px";
-    }
-
-  },
-
-  initPlayhead: function() {
-
-    var min            = 12;
-    var offset         = 30;
-    var that           = this;
-    var decadeElements = this.getDOMNode().querySelectorAll(".decade");
-
-    interact(this.getDOMNode().querySelector(".playhead-container")).draggable({
-      restrict: {
-        restriction: "parent"
-      },
-      onstart: function(e) {
-
-        that.setState({"moving":true});
-
-      },
-      onmove: function(e) {
-
-        if ((e.pageX-offset) > min && that.getDOMNode().offsetWidth-min > (e.pageX-offset)) {
-          e.target.style.left = (e.pageX-offset) + "px";
-        }
-
-      },
-      onend: function(e) {
-
-        that.setState({"moving":false});
-
-      }
-    });
-
-    for (var i=0; decadeElements.length > i; i++) {
-
-      interact(decadeElements[i]).dropzone({
-        accept: ".playhead-container",
-        overlap: 0.5,
-        ondrop: function(e) {
-          that.props.onDecadeSelect(e.target.getAttribute("data-value"));
-        },
-        ondragenter: function(e) {
-          that.props.onDecadeSelect(e.target.getAttribute("data-value"));
-        }
-      });
-
-      decadeElements[i].addEventListener(
-        'transitionend',
-        that.utils.debounce(function() {
-
-          that.updatePlayheadPosition();
-          that.stopTrackingAnimation();
-
-        }, 500)
-      , false);
 
     }
 
@@ -305,9 +227,6 @@ var PopulationTimeline = React.createClass({
             <div className="decade-detail">
               <p>The slave trade reintensified with the resurgence of the world cotton market in the 1850s. Slaveowners in areas like Natchez and the Black Belt that had been settled decades earlier sold bondspeople to their counterparts in Texas and Arkansas.</p>
             </div>
-          </div>
-          <div className="playhead-container">
-            <img src="./static/playhead.svg" />
           </div>
           <div className="labels">
             <label className="narratives">Narratives</label>

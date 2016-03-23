@@ -306,7 +306,7 @@ var App = React.createClass({
   },
 
   onEachFeatureNarratives: function(feature, layer) {
-    var className = "narrative-circle";
+    var className = "narrative-circle zoom" + this.refs.map.map._zoom;
     if (parseInt(feature.properties.narrative_id) === parseInt(this.state.selectedNarrative)) {
       className += " selected";
     }
@@ -545,6 +545,12 @@ var App = React.createClass({
     this.initialMapState.coords = [center.lat.toFixed(precision), center.lng.toFixed(precision)];
     this.initialMapState.zoom = zoom;
 
+    // update narrative map marker class for zoom changes
+    let narrativeMarkers = document.getElementsByClassName('narrative-circle');
+    for (let i = 0; i < narrativeMarkers.length; i++) {
+      narrativeMarkers[i].className = narrativeMarkers[i].className.replace(/zoom\d+/, "zoom" + zoom);
+    }
+
     this.updateURL();
   },
 
@@ -578,7 +584,7 @@ var App = React.createClass({
     var stateFeatures = PlacesStore.getGeographicStatesFilteredByDecade(this.state.selectedDecade);
     var countyFeatures = PlacesStore.getCountyShapesByDecade(this.state.selectedDecade);
     var narrativeFeatures = (this.state.show_narratives) ? NarrativesStore.getNarrativesFilteredByDecade(this.state.selectedDecade) : {features:[]};
-    
+
     return (
       <div className={this.getRichmondContainerClass()} style={{height: this.heights.app + 'px'}} >
 

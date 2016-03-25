@@ -89,7 +89,7 @@
     stroke-dasharray: 5, 5;
 
     &.selected {
-      stroke:rgba(0,0,0,.7);
+      stroke:rgba(50,50,50,.7);
       &.hide {
         display:none;
       }
@@ -97,10 +97,10 @@
   }
 
   .places-county {
-    fill:transparent;
+    //fill:transparent;
     stroke:rgba(0,0,0,0);
     cursor:pointer;
-    stroke-width:1px;
+    stroke-width:0.75px;
     stroke-opacity:.7;
 
     &.geographic-state-selected {
@@ -108,8 +108,13 @@
     }
 
     &.selected {
-      fill:black;
-      stroke-opacity:0;
+      stroke-width:6px;
+      stroke:rgba(160,32,240,1);
+    }
+
+    &.geographic-state-unselected {
+      fill:transparent;
+      stroke:rgba(0,0,0,0);
     }
 
   }

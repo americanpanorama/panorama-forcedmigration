@@ -315,18 +315,49 @@ var App = React.createClass({
   },
 
   onEachFeatureCounties: function(feature, layer) {
-    var className = '';
+    var className = '',
+        visible = false,
+        selected = false,
+        red,
+        green,
+        blue;
+
     if (feature.properties.nhgis_join === this.state.selectedCounty) {
       className += ' selected';
+      selected = true;
     }
     if (feature.properties.key === this.state.selectedGeographicState) {
       className += ' geographic-state-selected';
-    }
+      visible = true;
+
+      // calculate value for choropleth
+      let countiesAcrossDecade = PlacesStore.getCountyBubbleById(feature.properties.nhgis_join);
+      for (var i in countiesAcrossDecade) {
+        if (parseInt(countiesAcrossDecade[i].year) - 10 == this.state.selectedDecade) {
+          // calculate fill color
+          var max = 15;
+          var multiplier = (countiesAcrossDecade[i].per_sqmi >= max) ? 1 : countiesAcrossDecade[i].per_sqmi / max;
+          if (countiesAcrossDecade[i].inmigrations > 0) {
+            red =   Math.round(255 - 83 * multiplier);
+            green = Math.round(255 - 201 * multiplier);
+            blue =  Math.round(255 - 237 * multiplier);
+          } else {
+            red =   Math.round(255 - 175 * multiplier);
+            green = Math.round(255 - 90 * multiplier);
+            blue =  Math.round(255 - 77 * multiplier);
+          }
+          var color = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
+        }
+      }
+    } 
     if (className) {
       layer.eachLayer(function(_layer) {
-        _layer.options.className += className;
+        _layer.options.className = 'places-county' + className;
+        if (visible) {
+          _layer.setStyle({ fillColor: color, fillOpacity: 1});
+        }
       });
-    }
+    } 
   },
 
   onEachFeatureCrops: function(feature, layer) {
@@ -613,7 +644,7 @@ var App = React.createClass({
                     <GeoJSONLayer featuregroup={cropFeatures} onEachFeature={this.onEachFeatureCrops} />
                     <LeafletHexLayer featuregroup={PopulationStore.getHexbinDataFilteredByDecade(this.state.selectedDecade)} />
                     <GeoJSONLayer featuregroup={stateFeatures} className="places-states" onClick={this.onGeographicStateClick} />
-                    <GeoJSONLayer featuregroup={countyFeatures} className="places-county" onClick={this.onCountyClick} onEachFeature={this.onEachFeatureCounties} selectedFeature={this.state.selectedCounty} centerGeography={true} panIntoView={true} />
+                    <GeoJSONLayer featuregroup={countyFeatures} className="places-county geographic-state-unselected" onClick={this.onCountyClick} onEachFeature={this.onEachFeatureCounties} selectedFeature={this.state.selectedCounty} centerGeography={true} panIntoView={true} />
                     <GeoJSONLayer featuregroup={narrativeFeatures} onEachFeature={this.onEachFeatureNarratives} onClick={this.onNarrativeMapClick} />
                     <LeafletMapKey keyOptions={this.keyOptions} />
                   </LeafletMap>
@@ -694,7 +725,7 @@ var App = React.createClass({
                     <GeoJSONLayer featuregroup={cropFeatures} onEachFeature={this.onEachFeatureCrops} />
                     <LeafletHexLayer featuregroup={PopulationStore.getHexbinDataFilteredByDecade(this.state.selectedDecade)}/>
                     <GeoJSONLayer featuregroup={stateFeatures} className="places-states" onClick={this.onGeographicStateClick} />
-                    <GeoJSONLayer featuregroup={countyFeatures} className="places-county" onClick={this.onCountyClick} onEachFeature={this.onEachFeatureCounties} selectedFeature={this.state.selectedCounty} centerGeography={true} panIntoView={true}/>
+                    <GeoJSONLayer featuregroup={countyFeatures} className="places-county geographic-state-unselected" onClick={this.onCountyClick} onEachFeature={this.onEachFeatureCounties} selectedFeature={this.state.selectedCounty} centerGeography={true} panIntoView={true}/>
                     <GeoJSONLayer featuregroup={narrativeFeatures} onEachFeature={this.onEachFeatureNarratives} onClick={this.onNarrativeMapClick} />
                   </LeafletMap>
                 </div>

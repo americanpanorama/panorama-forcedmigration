@@ -8,6 +8,7 @@
   background-color:white;
   border-radius:3px;
   font-size:75%;
+  width: 380px;
 
   h3 {
     margin:0;
@@ -38,6 +39,12 @@
       list-style-type: none;
       margin:0;
       padding-top:$paddingSmall;
+
+      strong {
+        float: right;
+        margin-left: 30px;
+        margin-right: -32px;
+      }
 
       &.population {
 

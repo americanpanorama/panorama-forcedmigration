@@ -137,7 +137,8 @@ var CountyOverlay = React.createClass({
       });
 
       if (cotton.length) {
-        return numeral(cotton[0].count).format("0,0") + " lbs";
+        let pounds = (cotton[0].crop_category_id === 87) ? cotton[0].count * 400: cotton[0].count;
+        return numeral(pounds).format("0,0") + " lbs.";
       } else {
         return "N/A";
       }

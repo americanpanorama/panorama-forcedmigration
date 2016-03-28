@@ -13,9 +13,9 @@ var CountyOverlay = React.createClass({
 
   hex: {},
 
-  hexPrevDecade: {},
-
   crops: [],
+
+  stateAbbrs: {'alabama': 'AL', 'arkansas': 'AK', 'delaware': 'DE', 'district of columbia': 'DC', 'florida': 'FL', 'georgia': 'GA', 'kentucky': 'KY', 'louisiana': 'LA', 'maryland': 'MD', 'mississippi': 'MS', 'missouri': 'MO', 'north carolina': 'NC', 'orleans': 'Orleans', 'south carolina': 'SC', 'southwest': 'South West', 'tennessee': 'TN', 'texas': 'TX', 'virginia': 'VA'},
 
   componentDidMount: function() {
 
@@ -70,18 +70,6 @@ var CountyOverlay = React.createClass({
         this.hex = {};
       }
 
-      hexPrevDecade = this.props.hex.filter(function(row) {
-
-        return parseInt(row.year) === parseInt(that.props.selectedDecade);
-
-      });
-
-      if (hexPrevDecade && hexPrevDecade.length) {
-        this.hexPrevDecade = hexPrevDecade[0];
-      } else {
-        this.hexPrevDecade = {};
-      }
-
     }
 
     if (this.props.crops && this.props.crops.rows) {
@@ -103,12 +91,11 @@ var CountyOverlay = React.createClass({
   },
 
   getShowClass: function() {
-    if (this.county.county_name) {
-      return "show";
-    } else {
-      return "hide";
-    }
+    return (this.props.selectedCounty && this.county.county_name) ? "show" : "hide";
+  },
 
+  getShowCrop(count) {
+    return (parseInt(count) > 0) ? 'show' : 'hide';
   },
 
   getSugar: function() {
@@ -174,7 +161,7 @@ var CountyOverlay = React.createClass({
 
   getMigrationText: function(val) {
     if (val) {
-      return (val >= 0 ) ? "Estimated in-migrations during the " + (this.props.selectedDecade - 10) + 's' : "Estimated out-migrations during the " + (this.props.selectedDecade - 10) + 's';
+      return (val >= 0 ) ? "Estimated in-migrations": "Estimated out-migrations";
     }
 
     return "Migration";
@@ -183,10 +170,8 @@ var CountyOverlay = React.createClass({
 
   getCountyText: function() {
     let unit = (this.county.key == 'louisiana') ? 'parish' : 'county';
-    if (this.county.key == 'south carolina') {
-      return (this.county.county_name.replace('Dist.', 'District') + ', South Carolina').toUpperCase();
-    }
-    return (this.county.county_name + " " + unit + ", " + this.county.key).toUpperCase();
+    let theState = (this.stateAbbrs[this.county.key]) ? this.stateAbbrs[this.county.key] : this.county.key;
+    return (this.county.key == 'south carolina') ? (this.county.county_name.replace('Dist.', 'District') + ', SC').toUpperCase() : (this.county.county_name + " " + unit + ", " + theState).toUpperCase();
   },
 
   checkLoading: function() {
@@ -203,19 +188,16 @@ var CountyOverlay = React.createClass({
   render: function() {
     this.setCounty();
 
-    console.log(this.props);
-
     return (
       <div className={"component county-overlay " + this.getShowClass()}>
         <h3>{this.getCountyText()}</h3>
         <button className="close" onClick={this.props.onClick}></button>
         <ul className={this.checkLoading(this.hex.population,this.hex.inmigrations)}>
           <li className={this.getMigrationClassName(this.hex.inmigrations)}>{this.getMigrationText(this.hex.inmigrations)}: <strong>{numeral(Math.abs(this.hex.inmigrations)).format("0,0")}</strong></li>
-          <li className="population">Enslaved population in { this.props.selectedDecade }: <strong>{numeral(this.hex.population).format("0,0")}</strong></li>
-          <li className="population">Enslaved population in { this.props.selectedDecade - 10}: <strong>{numeral(this.hexPrevDecade.population).format("0,0")}</strong></li>
-          <li className="cotton">Cotton grown in {this.props.selectedDecade - 1}: <strong>{this.getCotton()}</strong></li>
-          <li className="sugar">Sugar produced in {this.props.selectedDecade - 1}: <strong>{this.getSugar()}</strong></li>
-          
+          <li className="population">Enslaved population in { (parseInt(this.props.selectedDecade) + 10) }: <strong>{numeral(this.hex.population).format("0,0")}</strong></li>
+          <li className="population">Enslaved population in { this.props.selectedDecade}: <strong>{numeral(this.hex.prev_population).format("0,0")}</strong></li>
+          <li className={"cotton " + this.getShowCrop(this.getCotton())}>Cotton grown in {this.props.selectedDecade - 1}: <strong>{this.getCotton()}</strong></li>
+          <li className={"sugar " + this.getShowCrop(this.getSugar())}>Sugar produced in {this.props.selectedDecade - 1}: <strong>{this.getSugar()}</strong></li>
         </ul>
       </div>
     );

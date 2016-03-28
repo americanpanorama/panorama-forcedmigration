@@ -63,12 +63,25 @@ var App = React.createClass({
     position: 'bottomleft',
     items: [
       {
-        klass: 'out',
-        content: '<img src="./static/map-key-circles-grey.svg"/><span>Outmigration</span>'
+        klass: 'hexes',
+        content: '<span class="out">Outmigrations</span><img src="./static/map-key-circles-red-blue.svg"/><span class="in">Inmigrations</span>'
       },
       {
-        klass: 'in',
-        content: '<img src="./static/map-key-circles-red.svg"/><span>Inmigration</span>'
+        content: '<span class="out scale">1200 people</span><span class="no-net scale">0</span><span class="in scale">1200 people</span>'
+      }
+    ]
+  },
+
+  keyOptionsStateSelected: {
+    html: true,
+    position: 'bottomleft',
+    items: [
+      {
+        klass: 'hexes',
+        content: '<span class="out">Outmigrations</span><img src="./static/county-gradient-2.svg" class="choropleth" /><span class="in">Inmigrations</span>'
+      },
+      {
+        content: '<span class="out scale">5+ people/sq mi</span><span class="no-net scale">0</span><span class="in scale">5+ people/sq mi</span>'
       }
     ]
   },
@@ -320,7 +333,8 @@ var App = React.createClass({
         selected = false,
         red,
         green,
-        blue;
+        blue, 
+        color;
 
     if (feature.properties.nhgis_join === this.state.selectedCounty) {
       className += ' selected';
@@ -329,14 +343,16 @@ var App = React.createClass({
     if (feature.properties.key === this.state.selectedGeographicState) {
       className += ' geographic-state-selected';
       visible = true;
-
+      color = 'transparent';
+      
       // calculate value for choropleth
       let countiesAcrossDecade = PlacesStore.getCountyBubbleById(feature.properties.nhgis_join);
       for (var i in countiesAcrossDecade) {
         if (parseInt(countiesAcrossDecade[i].year) - 10 == this.state.selectedDecade) {
           // calculate fill color
-          var max = 15;
-          var multiplier = (countiesAcrossDecade[i].per_sqmi >= max) ? 1 : countiesAcrossDecade[i].per_sqmi / max;
+          var migrations_per_sqmi = Math.abs(countiesAcrossDecade[i].inmigrations / countiesAcrossDecade[i].area_sqmi);
+          var max = 5;
+          var multiplier = (migrations_per_sqmi >= max) ? 1 : migrations_per_sqmi / max;
           if (countiesAcrossDecade[i].inmigrations > 0) {
             red =   Math.round(255 - 83 * multiplier);
             green = Math.round(255 - 201 * multiplier);
@@ -346,7 +362,8 @@ var App = React.createClass({
             green = Math.round(255 - 90 * multiplier);
             blue =  Math.round(255 - 77 * multiplier);
           }
-          var color = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
+
+          color = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
         }
       }
     } 
@@ -615,6 +632,7 @@ var App = React.createClass({
     var stateFeatures = PlacesStore.getGeographicStatesFilteredByDecade(this.state.selectedDecade);
     var countyFeatures = PlacesStore.getCountyShapesByDecade(this.state.selectedDecade);
     var narrativeFeatures = (this.state.show_narratives) ? NarrativesStore.getNarrativesFilteredByDecade(this.state.selectedDecade) : {features:[]};
+    var keyOptions = (this.state.selectedGeographicState) ? this.keyOptionsStateSelected : this.keyOptions;
 
     return (
       <div className={this.getRichmondContainerClass()} style={{height: this.heights.app + 'px'}} >
@@ -644,9 +662,9 @@ var App = React.createClass({
                     <GeoJSONLayer featuregroup={cropFeatures} onEachFeature={this.onEachFeatureCrops} />
                     <LeafletHexLayer featuregroup={PopulationStore.getHexbinDataFilteredByDecade(this.state.selectedDecade)} />
                     <GeoJSONLayer featuregroup={stateFeatures} className="places-states" onClick={this.onGeographicStateClick} />
-                    <GeoJSONLayer featuregroup={countyFeatures} className="places-county geographic-state-unselected" onClick={this.onCountyClick} onEachFeature={this.onEachFeatureCounties} selectedFeature={this.state.selectedCounty} centerGeography={true} panIntoView={true} />
+                    <GeoJSONLayer featuregroup={countyFeatures} className="places-county geographic-state-unselected" onClick={this.onCountyClick} onEachFeature={this.onEachFeatureCounties} selectedFeature={this.state.selectedCounty} centerGeography={false} panIntoView={true} />
                     <GeoJSONLayer featuregroup={narrativeFeatures} onEachFeature={this.onEachFeatureNarratives} onClick={this.onNarrativeMapClick} />
-                    <LeafletMapKey keyOptions={this.keyOptions} />
+                    <LeafletMapKey keyOptions={keyOptions} />
                   </LeafletMap>
                 }
 
@@ -669,7 +687,7 @@ var App = React.createClass({
                 </div>
 
                 <button className="info-icon info-icon-map" data-step="0" onClick={this.openIntro} />
-                <CountyOverlay selectedDecade={this.state.selectedDecade} counties={PlacesStore.getCountyMetadataById(this.state.selectedCounty)} crops={CropsStore.getCropDetailsByCountyId(this.state.selectedCounty)} hex={PlacesStore.getCountyBubbleById(this.state.selectedCounty)} onClick={this.clearCounty} />
+                <CountyOverlay selectedDecade={this.state.selectedDecade} selectedCounty={this.state.selectedCounty} counties={PlacesStore.getCountyMetadataById(this.state.selectedCounty)} crops={CropsStore.getCropDetailsByCountyId(this.state.selectedCounty)} hex={PlacesStore.getCountyBubbleById(this.state.selectedCounty)} onClick={this.clearCounty} />
               </div>
 
               <div className="population-timeline-container">

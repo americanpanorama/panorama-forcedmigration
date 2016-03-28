@@ -82,14 +82,14 @@
 
   .places-states {
     fill:transparent;
-    stroke:rgba(0,0,0,0);
+    stroke:rgba(150,150,150,1);
     stroke-opacity:1;
-    stroke-width:1px;
+    stroke-width:0.5px;
     cursor:pointer;
-    stroke-dasharray: 5, 5;
 
     &.selected {
-      stroke:rgba(50,50,50,.7);
+      stroke:rgba(0,0,0,.7);
+      stroke-width: 2px;
       &.hide {
         display:none;
       }
@@ -145,20 +145,42 @@
   font-size: 12px;
   border-radius: 5px;
 
-  .key-item:first-child {
-    margin-bottom: 5px;
-  }
 
   span, img {
     vertical-align: middle;
   }
 
   span {
-    margin-left: 5px;
+    margin: 0px;
+    display: inline-block;
+    
+    $label-width: 80px;
+
+    &.out{
+      text-align: right;
+      width: $label-width;
+    }
+    &.in{
+      text-align: left;
+      width: $label-width;
+    }
+    &.no-net {
+      width: 120px;
+      text-align: center;
+    }
+    &.scale {
+       font-size: .85em;
+    }
   }
 
   img {
-    width: 65px;
+    width: 140px;
     height: 15px;
+    margin: 0 -10px;
+
+    &.choropleth {
+      width: 100px;
+      margin: 0 10px;
+    }
   }
 }

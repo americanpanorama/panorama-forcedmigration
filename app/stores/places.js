@@ -163,9 +163,8 @@ function selectDecade(decade) {
 }
 
 function selectGeographicState(geographicState, decade, statePassthrough) {
-  var _state = statePassthrough || {};
+  var _state = statePassthrough || { 'selectedCounty': null};
   _state["selectedGeographicState"] = geographicState;
-
   if (!data.countyShapes[decade]) {
     data.countyShapes[decade] = {};
   }

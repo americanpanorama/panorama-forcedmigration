@@ -13,6 +13,12 @@ var LeafletMapKey = React.createClass({
     this.props.mapref.addControl(this.leafletLayer);
   },
 
+  componentDidUpdate: function() {
+    this.props.mapref.removeControl(this.leafletLayer)
+    this.leafletLayer = new L.MapKey(this.props.keyOptions || []);
+    this.props.mapref.addControl(this.leafletLayer);
+  },
+
   componentWillUnmount: function() {
     if (this.props.mapref) this.props.mapref.removeControl(this.leafletLayer);
     this.leafletLayer = null;

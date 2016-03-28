@@ -8,7 +8,7 @@
   background-color:white;
   border-radius:3px;
   font-size:75%;
-  width: 380px;
+  width: 300px;
 
   h3 {
     margin:0;
@@ -51,7 +51,7 @@
       }
 
       &.outmigration {
-        color: #8E9E96;
+        color: $colorDarkTeal;
       }
 
       &.inmigration {
@@ -60,10 +60,18 @@
 
       &.cotton {
         color:$colorCotton;
+
+        &.hide {
+          display: none;
+        }
       }
 
       &.sugar {
         color:$colorSugar;
+
+        &.hide {
+          display: none;
+        }
       }
     }
   }

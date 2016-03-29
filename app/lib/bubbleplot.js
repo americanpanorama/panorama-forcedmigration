@@ -65,7 +65,7 @@ module.exports = function bubbleplot(rootSelector, options) {
 
     var enter = selection.enter().append("circle")
         .attr("class", function(stuff) {
-          return "dot dot-" + stuff.nhgis_join;
+          return "dot dot-" + stuff.nhgis_join + " dot-" + stuff.state_terr.replace(/ /g,'').toLowerCase();
         })
         .attr("r", function(d) { return radius(d.population); })
         .attr("cx", function(d) { return Math.max(x(d.per_sqmi),-2) || -2; })

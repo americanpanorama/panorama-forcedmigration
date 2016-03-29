@@ -305,6 +305,20 @@ var CountyBubblePlot = React.createClass({
 
   },
 
+  selectGeographicState: function() {
+    this.clearCountySelections();
+
+    var countyElements = this.getDOMNode().querySelectorAll(".dot-" + this.props.selectedGeographicState.replace(/ /g,''));
+
+    if (countyElements) {
+      for (let i = 0; i < countyElements.length; i++) {
+        countyElements[i].classList.add("selected");
+      }
+    }
+  },
+
+
+
   updateView: function() {
 
     this.updateData();
@@ -315,7 +329,16 @@ var CountyBubblePlot = React.createClass({
       this.getDOMNode().classList.remove("county-selected");
     }
 
-    this.selectCounty(this.props.selectedCounty);
+    if (!this.props.selectedCounty && this.props.selectedGeographicState) {
+      this.getDOMNode().classList.add("county-selected");
+    }
+
+
+    if (this.props.selectedCounty) {
+      this.selectCounty(this.props.selectedCounty);
+    } else {
+      this.selectGeographicState();
+    }
 
   },
 

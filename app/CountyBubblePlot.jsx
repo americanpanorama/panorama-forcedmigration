@@ -85,8 +85,8 @@ var CountyBubblePlot = React.createClass({
     if (this.props.showAxisLabels) {
 
       var y = d3.scale.sqrt()
-        .range([height, 15 * height/54, 0])
-        .domain([-39000, 0, 15000]).nice();
+        .range([height, 0])
+        .domain([-39000, 15000]).nice();
 
       var x = d3.scale.log()
         .range([0, width])
@@ -94,14 +94,14 @@ var CountyBubblePlot = React.createClass({
 
       this.bubble.background.append("g")
           .attr("class", "x axis")
-          .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+          .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
           .call(this.bubble.xAxis)
         .append("text")
           .attr("class", "label")
           .attr("x", width/2)
           .attr("y", margin.bottom - 25)
           .style("text-anchor", "middle")
-          .text("Enslaved Persons per Square Mile");
+          .text("Enslaved People per Square Mile");
 
       this.bubble.background.append("text")
           .attr("class", "internal-label")
@@ -119,13 +119,13 @@ var CountyBubblePlot = React.createClass({
 
       this.bubble.background.append("g")
           .attr("class", "y axis")
-          .attr("transform", "translate(" + (width - margin.right) + ",0)")
+          .attr("transform", "translate(" + (width - margin.right) + "," + margin.top + ")")
           .call(this.bubble.yAxis)
-        .append("text")
+      .append("text")
           .attr("writing-mode", "tb")
           .attr("class", "label")
           .attr("x", -10)
-          .attr("y", height * 15/54)
+          .attr("y", y(0))
           .style("text-anchor", "middle")
           .text("Net Forced Migrations");
     } else if (this.props.showSimpleLabels) {
@@ -308,7 +308,7 @@ var CountyBubblePlot = React.createClass({
   selectGeographicState: function() {
     this.clearCountySelections();
 
-    var countyElements = this.getDOMNode().querySelectorAll(".dot-" + this.props.selectedGeographicState.replace(/ /g,''));
+    let countyElements = this.getDOMNode().querySelectorAll(".dot-" + this.props.selectedGeographicState.replace(/ /g,''));
 
     if (countyElements) {
       for (let i = 0; i < countyElements.length; i++) {
@@ -336,7 +336,7 @@ var CountyBubblePlot = React.createClass({
 
     if (this.props.selectedCounty) {
       this.selectCounty(this.props.selectedCounty);
-    } else {
+    } else if (this.props.selectedGeographicState) {
       this.selectGeographicState();
     }
 
@@ -398,8 +398,8 @@ var CountyBubblePlot = React.createClass({
     if (countyElement) {
       var parentOffset = svgElement.getBoundingClientRect();
       labelElement.style.position = "absolute";
-      labelElement.style.top      = (svgElement.offsetTop + parseInt(countyElement.getAttribute("cy")) - offset) + "px";
-      labelElement.style.left     = ((svgElement.offsetLeft + parentOffset.left + parseInt(countyElement.getAttribute("cx"))) - offset) + "px";
+      labelElement.style.top      = (parseInt(countyElement.getAttribute("cy")) - offset) + "px";
+      labelElement.style.left     = ((parentOffset.left + parseInt(countyElement.getAttribute("cx"))) - offset) + "px";
       labelElement.style.display  = "block";
     } else {
       labelElement.style.display  = "none";

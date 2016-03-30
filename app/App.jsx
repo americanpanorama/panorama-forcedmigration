@@ -718,8 +718,9 @@ var App = React.createClass({
               <div className="relative-container" style={{height: this.heights.bubble + 'px'}}>
               {!this.state.smallmap &&
                 <CountyBubblePlot
-                  showSimpleLabels={true}
+                  //showSimpleLabels={true}
                   showLegend={true}
+                  showAxisLabels={true}
                   selectedDecade={this.state.selectedDecade}
                   selectedCounty={this.state.selectedCounty}
                   selectedGeographicState={this.state.selectedGeographicState}

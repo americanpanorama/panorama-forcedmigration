@@ -20,8 +20,8 @@ module.exports = function bubbleplot(rootSelector, options) {
     .domain([0.01, 80]).nice();
 
   var y = d3.scale.sqrt()
-    .range([innerHeight, 15 * innerHeight/54, 0])
-    .domain([-39000, 0, 15000]).nice();
+    .range([0, innerHeight])
+    .domain([15000, -39000]);
 
   var radius = d3.scale.sqrt()
     .range([0.5,10]);
@@ -29,12 +29,12 @@ module.exports = function bubbleplot(rootSelector, options) {
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
-      .tickSize(-height)
-      .tickValues([1, 10, 20, 40, 100])
+      .tickSize(-innerHeight)
+      .tickValues([1, 5, 10, 25, 50, 100])
       .tickFormat(d3.format(","));
 
   var yAxis = d3.svg.axis()
-      .tickSize(-width)
+      .tickSize(-innerWidth)
       .scale(y)
       .orient("right")
       .tickValues([-30000,  -10000,  -5000,  -1000, 0, 1000, 5000,  10000]);
@@ -45,10 +45,21 @@ module.exports = function bubbleplot(rootSelector, options) {
 
   var background = svg.append("g")
       .attr('class', 'bubbleplot-background')
-      // .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .attr("transform", "translate(0,0)")
       .attr("width", width)
       .attr("height", height);
+
+  background.append("rect")
+      .attr('class', 'background-inmigrations')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .attr("width", innerWidth)
+      .attr("height", y(0));
+
+  background.append("rect")
+      .attr('class', 'background-outmigrations')
+      .attr("transform", "translate(" + margin.left + "," + (y(0) + margin.top) + ")") 
+      .attr("width", innerWidth)
+      .attr("height", y(-39000) - y(0));
 
   var foreground = svg.append("g")
       .attr('class', 'bubbleplot-foreground')

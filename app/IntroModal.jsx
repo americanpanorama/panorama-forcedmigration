@@ -6,16 +6,33 @@ var React = require("react");
  * This is distinct from the IntroManager "intro",
  * which acts more like a series of walkthrough overlays.
  */
+var coverImgPath = './static/introModalCover.png';
 var IntroModal = React.createClass({
 
 	propTypes: {
 		onDismiss: React.PropTypes.func
 	},
 
+	componentWillMount: function() {
+
+		var img = new Image(),
+			onload = function (event) {
+				img.removeEventListener('load', onload);
+				this.setState({
+					coverImgLoaded: true
+				});
+			}.bind(this);
+
+		img.addEventListener('load', onload);
+		img.src = coverImgPath;
+
+	},
+
 	getInitialState: function () {
 
 		return {
-			pageIndex: 0
+			pageIndex: 0,
+			coverImgLoaded: false
 		};
 
 	},
@@ -62,7 +79,7 @@ var IntroModal = React.createClass({
 							<span className='title-lg'>ENSLAVED PEOPLE</span>
 							<span className='title-sm'>in the United States</span>
 						</div>
-						<img src='./static/introModalCover.png' />
+						<img src={ coverImgPath } className={ this.state.coverImgLoaded ? '' : 'loading' } />
 						<div className='dates-overlay'><span>1810</span><span>1860</span></div>
 						<p>The decades between the banning of the international slave trade in 1808 and the abolition of slavery during the Civil War saw the massive and harrowing relocation of approximately 850,000 enslaved men, women, and children. While some enslaved people were moved when their owners relocated to the western frontier, about two-thirds were bought and sold in America’s slave market. They were forcibly uprooted from their homes, separated from their loved ones, and marched and shipped across the South on railroads and steamships.</p>
 						<div className='intro-modal-button' onClick={ () => this.setPage(1) }>Next</div>

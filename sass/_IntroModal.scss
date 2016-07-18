@@ -82,6 +82,10 @@ $intro-background-color: #90a3a0;
 		img {
 			width: 100%;
 			border: $intro-border;
+
+			&.loading {
+				height: 391px;	// avoid collapsing while loading image
+			}
 		}
 
 		.dates-overlay {

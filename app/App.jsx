@@ -36,6 +36,7 @@ var CountyOverlay         = require("./CountyOverlay.jsx");
 var Modal                 = require('react-modal');
 var Legend                = require('./Legend.jsx');
 var PanoramaNav           = require('./PanoramaNavigation.jsx');
+var IntroModal            = require('./IntroModal.jsx');
 var throttle              = require('lodash.throttle');
 var includes              = require('lodash.includes');
 
@@ -126,10 +127,13 @@ var App = React.createClass({
     defaultState.populationData = PopulationStore.getData();
     defaultState.narrativeData = NarrativesStore.getData();
 
+    defaultState.showIntroModal = window.localStorage.getItem('hasViewedIntroModal') !== 'true';
+
     return defaultState;
   },
 
   componentWillMount: function() {
+    this.onDismissIntroModal = this.onDismissIntroModal.bind(this);
     this.computeDimensions();
     Modal.setAppElement(document.querySelector("body"));
   },
@@ -487,6 +491,15 @@ var App = React.createClass({
     this.setState(newState);
   },
 
+  onDismissIntroModal: function(persist) {
+    if (persist) {
+      window.localStorage.setItem('hasViewedIntroModal', 'true');
+    }
+    this.setState({
+      showIntroModal: false
+    });
+  },
+
   openAbout: function() {
     this.setState({"showAbout":true});
   },
@@ -608,7 +621,8 @@ var App = React.createClass({
       (!this.state.show_cotton ? " hide-cotton" : "") +
       (!this.state.show_sugar ? " hide-sugar" : "") +
       (!this.state.show_labels ? " hide-labels" : "") +
-      (this.state.smallmap ? " showing-small-map" : "");
+      (this.state.smallmap ? " showing-small-map" : "") +
+      (this.state.showIntroModal ? " intro-modal-open" : "");
   },
 
   getNavData: function() {
@@ -810,6 +824,8 @@ var App = React.createClass({
 
           <p><a href='https://mellon.org/'>The Andrew W. Mellon Foundation</a> generously provided grant funding to develop <cite>American Panorama</cite>.</p>
         </Modal>
+
+        { this.state.showIntroModal ? <IntroModal onDismiss={ this.onDismissIntroModal } /> : '' }
       </div>
     );
   }

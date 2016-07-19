@@ -82,7 +82,7 @@ var IntroModal = React.createClass({
 						<img src={ coverImgPath } className={ this.state.coverImgLoaded ? '' : 'loading' } />
 						<div className='dates-overlay'><span>1810</span><span>1860</span></div>
 						<p>The decades between the banning of the international slave trade in 1808 and the abolition of slavery during the Civil War saw the massive and harrowing relocation of approximately 850,000 enslaved men, women, and children. While some enslaved people were moved when their owners relocated to the western frontier, about two-thirds were bought and sold in America’s slave market. They were forcibly uprooted from their homes, separated from their loved ones, and marched and shipped across the South on railroads and steamships.</p>
-						<div className='intro-modal-button' onClick={ () => this.setPage(1) }>Next</div>
+						<div className='intro-modal-button' onClick={ function (e) { this.setPage(1); }.bind(this) }>Next</div>
 					</div>
 				</div>
 			);
@@ -131,7 +131,7 @@ var IntroModal = React.createClass({
 						<p className='map-desc'>The map shows where nearly a million enslaved people were moved from and where they were moved to through the American slave trade and the migration of planters from 1810 to 1860.</p>
 						<div className='intro-modal-button' onClick={ this.dismissIntro }>Enter</div>
 						<div className='footer'>
-							<div onClick={ () => this.setPage(0) }>&lt; back</div>
+							<div onClick={ function (e) { this.setPage(0); }.bind(this) }>&lt; back</div>
 							<label onChange={ this.handleInputChange } ref='muteIntroLabel'><input type='checkbox' ref='muteIntroInput' />do not show again</label>
 						</div>
 					</div>

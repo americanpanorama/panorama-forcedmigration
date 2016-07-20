@@ -127,7 +127,7 @@ var App = React.createClass({
     defaultState.populationData = PopulationStore.getData();
     defaultState.narrativeData = NarrativesStore.getData();
 
-    defaultState.showIntroModal = window.localStorage.getItem('hasViewedIntroModal') !== 'true';
+    defaultState.showIntroModal = window.localStorage.getItem('hasViewedIntroModal-forcedmigration') !== 'true';
 
     return defaultState;
   },
@@ -493,7 +493,7 @@ var App = React.createClass({
 
   onDismissIntroModal: function(persist) {
     if (persist) {
-      window.localStorage.setItem('hasViewedIntroModal', 'true');
+      window.localStorage.setItem('hasViewedIntroModal-forcedmigration', 'true');
     }
     this.setState({
       showIntroModal: false

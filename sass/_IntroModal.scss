@@ -51,9 +51,10 @@ $intro-background-color: #90a3a0;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		height: 100%;
+		min-height: 100%;
 		position: relative;
 		margin: 0 auto;
+		padding-bottom: 20px;
 	}
 
 	.p0 {
@@ -91,7 +92,7 @@ $intro-background-color: #90a3a0;
 		.dates-overlay {
 			position: absolute;
 			left: 0;
-			top: 44%;
+			top: 41%;
 			width: 100%;
 
 			display: flex;

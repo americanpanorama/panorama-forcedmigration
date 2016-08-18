@@ -337,7 +337,7 @@ var App = React.createClass({
         selected = false,
         red,
         green,
-        blue, 
+        blue,
         color;
 
     if (feature.properties.nhgis_join === this.state.selectedCounty) {
@@ -348,7 +348,7 @@ var App = React.createClass({
       className += ' geographic-state-selected';
       visible = true;
       color = 'transparent';
-      
+
       // calculate value for choropleth
       let countiesAcrossDecade = PlacesStore.getCountyBubbleById(feature.properties.nhgis_join);
       for (var i in countiesAcrossDecade) {
@@ -370,7 +370,7 @@ var App = React.createClass({
           color = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
         }
       }
-    } 
+    }
     if (className) {
       layer.eachLayer(function(_layer) {
         _layer.options.className = 'places-county' + className;
@@ -378,7 +378,7 @@ var App = React.createClass({
           _layer.setStyle({ fillColor: color, fillOpacity: 1});
         }
       });
-    } 
+    }
   },
 
   onEachFeatureCrops: function(feature, layer) {

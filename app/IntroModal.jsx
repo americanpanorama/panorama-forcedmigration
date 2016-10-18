@@ -108,8 +108,8 @@ var IntroModal = React.createClass({
 								<li className='wider'>
 									<div className='ordinal'>2</div>
 									<div className='item'>
-										<p>Use the bubbleplot to explore the relationship between population density and forced migration for a county, a state, or the South as a whole.</p>
-										<img src='./static/introModalStep04.png' />
+										<p>Markers connect to enslaved people’s first-hand accounts of the slave trade.</p>
+										<img src='./static/introModalStep02.png' />
 									</div>
 								</li>
 								<li>
@@ -122,8 +122,8 @@ var IntroModal = React.createClass({
 								<li className='wider'>
 									<div className='ordinal descender'>4</div>
 									<div className='item'>
-										<p>Markers connect to enslaved people’s first-hand accounts of forced migration and the slave trade.</p>
-										<img src='./static/introModalStep02.png' />
+										<p>Use the bubbleplot to explore population density and forced migration for a county, state or the South as a whole.</p>
+										<img src='./static/introModalStep04.png' />
 									</div>
 								</li>
 							</ol>

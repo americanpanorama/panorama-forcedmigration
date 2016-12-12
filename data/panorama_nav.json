@@ -1,5 +1,13 @@
 [
 	{
+		"title"         : "Mapping Inequality: Redlining in New Deal America",
+		"url"           : "http://dsl.richmond.edu/panorama/redlining/",
+		"screenshot"    : "http://dsl.richmond.edu/panorama/static/images/holc-img.png",
+		"start_year"    : 1930,
+		"end_year"      : 1940,
+		"tags"          : []
+	},
+	{
 		"title"         : "The Forced Migration of Enslaved People",
 		"url"           : "http://dsl.richmond.edu/panorama/forcedmigration/",
 		"screenshot"    : "http://dsl.richmond.edu/panorama/static/images/forced-migration-img.png",
@@ -17,7 +25,7 @@
 	},
 	{
 		"title"         : "Foreign-Born Population",
-		"url"           : "http://dsl.richmond.edu/panorama/foreignborn/",
+		"url"           : "http://dsl.richmond.edu/panorama/foreignborn/#decade=2010",
 		"screenshot"    : "http://dsl.richmond.edu/panorama/static/images/foreign-born-img.png",
 		"start_year"    : 1850,
 		"end_year"      : 2010,
@@ -31,4 +39,5 @@
 		"end_year"      : 1860,
 		"tags"          : []
 	}
+
 ]

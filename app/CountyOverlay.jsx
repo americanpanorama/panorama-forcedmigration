@@ -15,7 +15,7 @@ var CountyOverlay = React.createClass({
 
   crops: [],
 
-  stateAbbrs: {'alabama': 'AL', 'arkansas': 'AK', 'delaware': 'DE', 'district of columbia': 'DC', 'florida': 'FL', 'georgia': 'GA', 'kentucky': 'KY', 'louisiana': 'LA', 'maryland': 'MD', 'mississippi': 'MS', 'missouri': 'MO', 'north carolina': 'NC', 'orleans': 'Orleans', 'south carolina': 'SC', 'southwest': 'South West', 'tennessee': 'TN', 'texas': 'TX', 'virginia': 'VA'},
+  stateAbbrs: {'alabama': 'AL', 'arkansas': 'AR', 'delaware': 'DE', 'district of columbia': 'DC', 'florida': 'FL', 'georgia': 'GA', 'kentucky': 'KY', 'louisiana': 'LA', 'maryland': 'MD', 'mississippi': 'MS', 'missouri': 'MO', 'north carolina': 'NC', 'orleans': 'Orleans', 'south carolina': 'SC', 'southwest': 'South West', 'tennessee': 'TN', 'texas': 'TX', 'virginia': 'VA'},
 
   componentDidMount: function() {
 

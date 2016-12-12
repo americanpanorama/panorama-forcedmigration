@@ -9,13 +9,17 @@ Latest build can be viewed at [http://dsl.richmond.edu/panorama/forcedmigration/
 A list of all base datasets for this project in CartoDB can be found in [data/README.md](data/README.md)
 
 ##Dependencies
-* [NPM](https://www.npmjs.com/)
+* [npm](https://www.npmjs.com/)
 * [CartoDB](https://cartodb.com/) account
 
 ##Setup
-Make sure you have [NPM](https://www.npmjs.com/) installed.
+Clone the project and `cd` into the project folder.
 
-Load required **NPM** modules.
+`nvm use` to fire up the right Node version.
+
+Make sure you have [npm](https://www.npmjs.com/) installed.
+
+Load required **npm** modules.
 ```bash
 npm install
 ```

@@ -138,6 +138,7 @@ button.enbiggen-icon {
   @import "NarrativeAccordion";
   @import "CountyOverlay";
   @import "Legend";
+  @import "IntroModal";
 
   @import url(http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic|Kameron:400,700|Oswald:400);
 
@@ -154,6 +155,9 @@ button.enbiggen-icon {
   min-width: 1px;
   z-index:1;
 
+  &.intro-modal-open {
+    border: none;
+  }
 
   .kameron {
     font-family: 'Kameron', serif;

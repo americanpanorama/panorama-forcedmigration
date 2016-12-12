@@ -36,6 +36,7 @@ var CountyOverlay         = require("./CountyOverlay.jsx");
 var Modal                 = require('react-modal');
 var Legend                = require('./Legend.jsx');
 var PanoramaNav           = require('./PanoramaNavigation.jsx');
+var IntroModal            = require('./IntroModal.jsx');
 var throttle              = require('lodash.throttle');
 var includes              = require('lodash.includes');
 
@@ -126,10 +127,13 @@ var App = React.createClass({
     defaultState.populationData = PopulationStore.getData();
     defaultState.narrativeData = NarrativesStore.getData();
 
+    defaultState.showIntroModal = window.localStorage.getItem('hasViewedIntroModal-forcedmigration') !== 'true';
+
     return defaultState;
   },
 
   componentWillMount: function() {
+    this.onDismissIntroModal = this.onDismissIntroModal.bind(this);
     this.computeDimensions();
     Modal.setAppElement(document.querySelector("body"));
   },
@@ -333,7 +337,7 @@ var App = React.createClass({
         selected = false,
         red,
         green,
-        blue, 
+        blue,
         color;
 
     if (feature.properties.nhgis_join === this.state.selectedCounty) {
@@ -344,7 +348,7 @@ var App = React.createClass({
       className += ' geographic-state-selected';
       visible = true;
       color = 'transparent';
-      
+
       // calculate value for choropleth
       let countiesAcrossDecade = PlacesStore.getCountyBubbleById(feature.properties.nhgis_join);
       for (var i in countiesAcrossDecade) {
@@ -366,7 +370,7 @@ var App = React.createClass({
           color = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
         }
       }
-    } 
+    }
     if (className) {
       layer.eachLayer(function(_layer) {
         _layer.options.className = 'places-county' + className;
@@ -374,7 +378,7 @@ var App = React.createClass({
           _layer.setStyle({ fillColor: color, fillOpacity: 1});
         }
       });
-    } 
+    }
   },
 
   onEachFeatureCrops: function(feature, layer) {
@@ -485,6 +489,15 @@ var App = React.createClass({
     newState["show_" + itemType] = this.state["show_" + itemType] ? false : true;
 
     this.setState(newState);
+  },
+
+  onDismissIntroModal: function(persist) {
+    if (persist) {
+      window.localStorage.setItem('hasViewedIntroModal-forcedmigration', 'true');
+    }
+    this.setState({
+      showIntroModal: false
+    });
   },
 
   openAbout: function() {
@@ -608,7 +621,8 @@ var App = React.createClass({
       (!this.state.show_cotton ? " hide-cotton" : "") +
       (!this.state.show_sugar ? " hide-sugar" : "") +
       (!this.state.show_labels ? " hide-labels" : "") +
-      (this.state.smallmap ? " showing-small-map" : "");
+      (this.state.smallmap ? " showing-small-map" : "") +
+      (this.state.showIntroModal ? " intro-modal-open" : "");
   },
 
   getNavData: function() {
@@ -810,6 +824,8 @@ var App = React.createClass({
 
           <p><a href='https://mellon.org/'>The Andrew W. Mellon Foundation</a> generously provided grant funding to develop <cite>American Panorama</cite>.</p>
         </Modal>
+
+        { this.state.showIntroModal ? <IntroModal onDismiss={ this.onDismissIntroModal } /> : '' }
       </div>
     );
   }

@@ -2,6 +2,9 @@ var React             = require("react");
 var PopulationActions = require("./actions/population");
 var bubbleplot        = require("./lib/bubbleplot.js");
 var d3                = require("d3");
+var addons            = require('react-addons');
+
+var TransitionGroup = addons.TransitionGroup;
 
 var margin = {top: 20, right: 60, bottom: 20, left: 20};
 
@@ -26,11 +29,11 @@ var CountyBubblePlot = React.createClass({
 	commaize: d3.format("0,"),
 	countyLookup: {},
 
+
+
 	componentDidMount: function() {
 
-		this.setState({
-			"mounted":  true,
-		});
+
 
 	},
 
@@ -54,136 +57,7 @@ var CountyBubblePlot = React.createClass({
 
 	},
 
-	ready: function(raw) {
-		var that = this;
 
-		raw.forEach(function(d) {
-			d.per_sqmi = d.population / d.area_sqmi;
-			d.state_terr = d.state_terr.replace(" Territory", "");
-		});
-
-
-		d3.nest()
-			.key(function(d) { return d.year; })
-			.entries(raw)
-			.forEach(function(d) {
-				that.data[d.key] = d.values;
-			});
-
-		this.bubble.radius
-			.domain(d3.extent(raw, function(d) { return d.population; }));
-
-		this.bubble.data(raw);
-
-		var width = this.bubble.width(),
-				height = this.bubble.height(),
-				outerWidth = width + margin.left + margin.right,
-				outerHeight = height + margin.top + margin.bottom;
-
-		this.bubble.background.selectAll('text').remove();
-
-		if (this.props.showAxisLabels) {
-
-			var y = d3.scale.sqrt()
-				.range([height, 0])
-				.domain([-39000, 15000]).nice();
-
-			var x = d3.scale.log()
-				.range([0, width])
-				.domain([0.01, 80]).nice();
-
-			this.bubble.background.append("g")
-					.attr("class", "x axis")
-					.attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
-					.call(this.bubble.xAxis)
-				.append("text")
-					.attr("class", "label")
-					.attr("x", width/2)
-					.attr("y", margin.bottom - 25)
-					.style("text-anchor", "middle")
-					.text("Enslaved People per Square Mile");
-
-			this.bubble.background.append("text")
-					.attr("class", "internal-label")
-					.attr("x", width/2)
-					.attr("y", y(5000) - 8)
-					.style("text-anchor", "middle")
-					.text("In-migrations");
-
-			this.bubble.background.append("text")
-					.attr("class", "internal-label")
-					.attr("x", width/2)
-					.attr("y", y(-10000) - 12)
-					.style("text-anchor", "middle")
-					.text("Out-migrations");
-
-			this.bubble.background.append("g")
-					.attr("class", "y axis")
-					.attr("transform", "translate(" + (width - margin.right) + "," + margin.top + ")")
-					.call(this.bubble.yAxis)
-			.append("text")
-					.attr("writing-mode", "tb")
-					.attr("class", "label")
-					.attr("x", -10)
-					.attr("y", y(0))
-					.style("text-anchor", "middle")
-					.text("Net Forced Migrations");
-		} else if (this.props.showSimpleLabels) {
-			this.bubble.background
-				.append("text")
-					.attr("class", "label")
-					.attr("y", height/2 + 10)
-					.attr("x", 50)
-					.attr("dy", "-.5em")
-					.style("text-anchor", "middle")
-					.text("Low Enslaved");
-
-			this.bubble.background
-				.append("text")
-					.attr("class", "label")
-					.attr("y", height/2 + 10)
-					.attr("x", 50)
-					.attr("dy", ".5em")
-					.style("text-anchor", "middle")
-					.text("Density");
-
-			this.bubble.background
-				.append("text")
-					.attr("class", "label")
-					.attr("y", height/2-20)
-					.attr("x", width - 55)
-					.attr("dy", "-.5em")
-					.style("text-anchor", "middle")
-					.text("High Enslaved");
-
-			this.bubble.background
-				.append("text")
-					.attr("class", "label")
-					.attr("y", height/2-20)
-					.attr("x", width-55)
-					.attr("dy", ".5em")
-					.style("text-anchor", "middle")
-					.text("Density");
-
-			this.bubble.background
-				.append("text")
-					.attr("class", "label")
-					.attr("y", 10)
-					.attr("x", width/2)
-					.attr("dy", ".71em")
-					.style("text-anchor", "middle")
-					.text("Inmigration");
-
-			this.bubble.background
-				.append("text")
-					.attr("class", "label")
-					.attr("x", width/2)
-					.attr("y", height - 10)
-					.attr("dy", "0")
-					.style("text-anchor", "middle")
-					.text("Outmigration");
-		}
-	},
 
 	simplifyNumber: function(value) {
 		if (value >= 1000) {
@@ -261,33 +135,7 @@ var CountyBubblePlot = React.createClass({
 		return null;
 	},
 
-	updateData: function() {
 
-		var that = this;
-
-		var payload = this.props;
-
-		if (!that.state.didFirstDraw && payload && payload.bubbles && payload.bubbles.features) {
-
-			that.ready(payload.bubbles.features.map(function(feature) {
-				return feature.properties;
-			}));
-
-			that.setState({didFirstDraw:true});
-		}
-
-		if (payload && payload.bubbles && payload.bubbles.features) {
-			// var alldata = [];
-			// Object.keys(that.data).forEach(function(decade) {
-			// 	that.data[decade].forEach(function(county) {
-			// 		alldata.push(county);
-			// 	});
-			// });
-			// console.log(alldata);
-			// that.bubble(alldata);
-			that.bubble(that.data[parseInt(that.props.selectedDecade) + 10]);
-		}
-	},
 
 	clearCountySelections: function() {
 
@@ -327,102 +175,69 @@ var CountyBubblePlot = React.createClass({
 
 
 
-	updateView: function() {
 
-		this.updateData();
-
-		if (this.props.selectedCounty) {
-			this.getDOMNode().classList.add("county-selected");
-		} else {
-			this.getDOMNode().classList.remove("county-selected");
-		}
-
-		if (!this.props.selectedCounty && this.props.selectedGeographicState) {
-			this.getDOMNode().classList.add("county-selected");
-		}
-
-
-		if (this.props.selectedCounty) {
-			this.selectCounty(this.props.selectedCounty);
-		} else if (this.props.selectedGeographicState) {
-			this.selectGeographicState();
-		}
-
-	},
 
 
 	componentDidUpdate: function() {
-		var that = this;
-
-		if (!that.first && that.props.width && that.props.height) {
-			that.first = true;
-
-			var bubble = bubbleplot(".component.county-bubble-plot", {"click":that.bubbleClick, "width": that.props.width, "height": that.props.height, "margin": margin });
-
-			that.bubble = bubble;
-
-				bubble.color(function(d) {
-					if (d > 0) return "#ac3612";
-					if (d <= 0) return "#50a5b2";
-				});
-
-				that.updateView();
-				that.updateLabelPosition();
-		}
-
-		if (that.first) {
-			that.updateView();
-			that.updateLabelPosition();
-		}
 
 	},
 
-	getCountyName: function() {
-		var that = this;
 
-		if (this.props.selectedCountyMetadata && this.props.selectedCountyMetadata.length) {
-			var decadeMetadata = this.props.selectedCountyMetadata.filter(function(item) {
-				return parseInt(item.year) === parseInt(that.props.selectedDecade)+10;
-			});
 
-			if (decadeMetadata.length) {
-				return decadeMetadata[0].county_name;
-			} else {
-				return "";
-			}
-		} else {
-			return "";
-		}
 
-	},
-
-	updateLabelPosition: function() {
-
-		var countyElement = this.getDOMNode().querySelector(".dot.selected");
-		var labelElement  = this.getDOMNode().querySelector(".county-label");
-		var svgElement    = this.getDOMNode().querySelector("svg");
-		var offset        = 5;
-
-		if (countyElement) {
-			var parentOffset = svgElement.getBoundingClientRect();
-			labelElement.style.position = "absolute";
-			labelElement.style.top      = (parseInt(countyElement.getAttribute("cy")) - offset) + "px";
-			labelElement.style.left     = ((parentOffset.left + parseInt(countyElement.getAttribute("cx"))) - offset) + "px";
-			labelElement.style.display  = "block";
-		} else {
-			labelElement.style.display  = "none";
-		}
-
-	},
 
 	render: function() {
 
-		return (
-			<div className='component county-bubble-plot'>
-				{this.makeLegend()}
-				<div className="county-label">{this.getCountyName()}</div>
+		console.log(this.props);
 
-			</div>
+		var x = d3.scale.log()
+			.range([0, this.props.width])
+			.domain([0.01, 80]).nice();
+
+		var y = d3.scale.sqrt()
+			.range([0, this.props.height])
+			.domain([15000, -39000]);
+
+		return (
+			<svg
+				width={ this.props.width }
+				height={ this.props.height }
+			>
+				<g class='x axis'>
+					{ [1, 5, 10, 25, 50].map(value => {
+						return (
+							<line 
+								x1={ x(value) } 
+								x2={ x(value) } 
+								y1={ 0 } 
+								y2={ this.props.height } 
+								style={ {
+									strokeWidth: 1,
+									stroke: 'grey'
+								} }
+							/>
+						);
+					}) }
+				</g>
+
+				<g class='y axis'>
+					{ [-30000,  -10000,  -5000,  -1000, 0, 1000, 5000,  10000].map(value => {
+						return (
+							<line 
+								x1={ 0 } 
+								x2={ this.props.width } 
+								y1={ y(value) } 
+								y2={ y(value) } 
+								style={ {
+									strokeWidth: 1,
+									stroke: 'grey'
+								} }
+							/>
+						);
+					}) }
+				</g>
+
+			</svg>
 		);
 	}
 

@@ -45,6 +45,7 @@ var PanoramaNavigation = React.createClass({
 
 					<div id='nav_header'>
 						<h1><a href='/panorama/'>American Panorama</a></h1>
+						<h2><a href="//dsl.richmond.edu">Digital Scholarship Lab, </a><a href="//www.richmond.edu">University of Richmond</a></h2>
 						{
 							this.props.nav_data.map(function(item, i) {
 								return (

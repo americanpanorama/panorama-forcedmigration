@@ -651,7 +651,13 @@ var App = React.createClass({
     return (
       <div className={this.getRichmondContainerClass()} style={{height: this.heights.app + 'px'}} >
 
-        <PanoramaNav show_panorama_menu={ this.state.show_panorama_menu } on_hamburger_click={ this.onPanoramaMenuClick } nav_data={ this.getNavData() }  />
+        <PanoramaNav 
+          show_panorama_menu={ this.state.show_panorama_menu } 
+          on_hamburger_click={ this.onPanoramaMenuClick } 
+          nav_data={ this.getNavData() }          
+          links={ [ {name: 'Digital Scholarship Lab', url: 'http://dsl.richmond.edu'}, { name: 'University of Richmond', url: 'http://www.richmond.edu' } ] } 
+          link_separator=', ' 
+        />
 
         <article className="content">
           <h1>The forced migration of enslaved people in the United States 1810 - 1860</h1>

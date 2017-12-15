@@ -11,13 +11,17 @@ var COUNTYNAMES_QUERY  = "SELECT * from site_countynames_materialized";
 var COUNTY_META_QUERY  = "SELECT county_name, key, nhgis_join, year FROM site_counties_materialized";
 var COUNTY_SHAPE_QUERY = "SELECT the_geom, county_name, key, nhgis_join, year FROM site_counties_materialized";
 var STATES_QUERY       = "SELECT * FROM site_states_materialized";
+var LOW_INTERIOR_PLATEAU_QUERY = "SELECT ST_Transform(ST_SetSRID(ST_Transform(the_geom,2163),3857),4326)  AS the_geom, cartodb_id FROM us_eco_l3 where na_l3name = 'Interior Plateau'";
+var BLACK_BELT_QUERY = "SELECT st_union(ST_Transform(ST_SetSRID(ST_Transform(the_geom,2163),3857),4326)) as the_geom, 1 as cartodb_id FROM digitalscholarshiplab.reg4_eco_l4 where us_l4code = '65a' or us_l4code = '65b' or us_l4code = '65d'";
 
 var data = {
       bubbles      : null, //This is where population is
       names        : null,
       counties     : {},
       countyShapes : {},
-      states       : null
+      states       : null,
+      lowInteriorPlateau : {features: []},
+      blackbelt: {features: []}
     };
 
 var dataCache = {
@@ -101,6 +105,34 @@ function getRemoteData() {
       }
 
       data.states = response;
+
+      if (getCompleteTest(data)) {
+        resolve(data);
+      }
+
+    }, {"format":"GEOJSON"});
+
+    dslClient.sqlRequest(LOW_INTERIOR_PLATEAU_QUERY, function(error, response) {
+
+      if (error) {
+        reject(error);
+      }
+
+      data.lowInteriorPlateau = response;
+
+      if (getCompleteTest(data)) {
+        resolve(data);
+      }
+
+    }, {"format":"GEOJSON"});
+
+    dslClient.sqlRequest(BLACK_BELT_QUERY, function(error, response) {
+
+      if (error) {
+        reject(error);
+      }
+
+      data.blackbelt = response;
 
       if (getCompleteTest(data)) {
         resolve(data);
@@ -280,6 +312,14 @@ var PlacesStore = assign({}, EventEmitter.prototype, {
    */
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
+  },
+
+  getBlackBelt: function() {
+    return data.blackbelt;
+  },
+
+  getLowInteriorPlateau: function() {
+    return data.lowInteriorPlateau;
   },
 
   /**

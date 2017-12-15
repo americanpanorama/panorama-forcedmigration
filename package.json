@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "start": "gulp",
-    "dist": "gulp dist"
+    "dist": "NODE_ENV=production gulp dist"
   },
   "repository": {
     "type": "git",

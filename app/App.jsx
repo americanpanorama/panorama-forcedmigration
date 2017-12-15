@@ -647,14 +647,14 @@ var App = React.createClass({
     var countyFeatures = PlacesStore.getCountyShapesByDecade(this.state.selectedDecade);
     var narrativeFeatures = (this.state.show_narratives) ? NarrativesStore.getNarrativesFilteredByDecade(this.state.selectedDecade) : {features:[]};
     var keyOptions = (this.state.selectedGeographicState) ? this.keyOptionsStateSelected : this.keyOptions;
-
+  
     return (
       <div className={this.getRichmondContainerClass()} style={{height: this.heights.app + 'px'}} >
 
         <PanoramaNav 
           show_panorama_menu={ this.state.show_panorama_menu } 
           on_hamburger_click={ this.onPanoramaMenuClick } 
-          nav_data={ this.getNavData() }          
+          nav_data={ this.getNavData() }
           links={ [ {name: 'Digital Scholarship Lab', url: 'http://dsl.richmond.edu'}, { name: 'University of Richmond', url: 'http://www.richmond.edu' } ] } 
           link_separator=', ' 
         />
@@ -673,12 +673,13 @@ var App = React.createClass({
                     mapOptions={{attributionControl:false, scrollWheelZoom: true}}>
                     <CartoTileLayer
                       zIndex={20}
-                      src="http://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png"
+                      src="https://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png"
                       userId={config.cartodbAccountName}
                       sql="SELECT * FROM unified_basemap_layers order by ord"
                       cartocss="@linecolor: lighten(#b1b4b4,20); @land: #f9f9f9; #unified_basemap_layers[layer='ne_10m_coastline_2163']{  line-color: @linecolor;  line-width: 0.75;  line-opacity: 1;  line-join: round;  line-cap: round;}#unified_basemap_layers[layer='ne_10m_lakes_2163'] {  line-color: @linecolor;  line-width: 2.5;  line-opacity: 1;  line-join: round;  line-cap: round;  /* Soften lines at lower zooms */  [zoom<=7] {    line-width: 2.5;    line-color: @linecolor;  }  [zoom<=5] {    line-width: 1.5;    line-color: @linecolor;  }  /* Separate attachment because seams */  ::fill {    polygon-fill: #b1b4b4;    polygon-opacity: 1;  }  /* Remove small lakes at lower zooms */  [scalerank>3][zoom<=5] {    ::fill {      polygon-opacity: 0;    }    line-opacity: 0;  }  [scalerank>6][zoom<=7] {    ::fill {      polygon-opacity: 0;    }    line-opacity: 0;  }}#unified_basemap_layers[layer='ne_10m_rivers_lake_centerlines_2163'] {  line-color: @linecolor;  line-width: 1.5;  line-opacity: 1;  line-join: round;  line-cap: round;  [name='Mississippi'],  [name='St. Lawrence'],  [name='Rio Grande'] {    line-width: 4;  }  [zoom<=8][name='Mississippi'],  [zoom<=8][name='St. Lawrence'],  [zoom<=8][name='Rio Grande'] {    line-width: 2;  }  [zoom<=8][name!='Mississippi'][name!='St. Lawrence'][name!='Rio Grande'],  [zoom<=6][name='Mississippi'],  [zoom<=6][name='Rio Grande'] {    line-width: 1;    line-color: @linecolor;  }  [zoom<=6][name!='Mississippi'][name!='St. Lawrence'][name!='Rio Grande'] {    line-width: 0.5;    line-color: @linecolor;  }  [zoom<=5][name!='Mississippi'][name!='St. Lawrence'][name!='Rio Grande']{    line-width: 0;  }  [zoom<=5][name='Mississippi'],  [zoom<=5][name='St. Lawrence'],  [zoom<=5][name='Rio Grande'] {    line-width: 0.5;    line-color: @linecolor;  }}#unified_basemap_layers[layer='ne_10m_admin_0_countries_lakes_2163'] {  line-color: @land;  line-width: 1;  line-opacity: 1;  line-join: round;  line-cap: round;  polygon-fill: @land;  polygon-opacity: 1;}"
+                      maps_api_template={'https://' + this.props.userId + '.carto.com'}
                     />
-                    <TileLayer src="http://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png" zIndex={50}/>
+                    <TileLayer src="https://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png" zIndex={50}/>
                     <GeoJSONLayer featuregroup={cropFeatures} onEachFeature={this.onEachFeatureCrops} />
                     <LeafletHexLayer featuregroup={PopulationStore.getHexbinDataFilteredByDecade(this.state.selectedDecade)} />
                     <GeoJSONLayer featuregroup={stateFeatures} className="places-states" onClick={this.onGeographicStateClick} />
@@ -757,12 +758,13 @@ var App = React.createClass({
                     mapMoveEndHandler={this.mapMoveHandler}
                     mapOptions={{attributionControl:false}}>
                     <CartoTileLayer
-                      src="http://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png"
+                      src="https://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png"
                       userId={config.cartodbAccountName}
                       sql="SELECT * FROM unified_basemap_layers order by ord"
                       cartocss="@linecolor: lighten(#b1b4b4,20); @land: #f9f9f9; #unified_basemap_layers[layer='ne_10m_coastline_2163']{  line-color: @linecolor;  line-width: 0.75;  line-opacity: 1;  line-join: round;  line-cap: round;}#unified_basemap_layers[layer='ne_10m_lakes_2163'] {  line-color: @linecolor;  line-width: 2.5;  line-opacity: 1;  line-join: round;  line-cap: round;  /* Soften lines at lower zooms */  [zoom<=7] {    line-width: 2.5;    line-color: @linecolor;  }  [zoom<=5] {    line-width: 1.5;    line-color: @linecolor;  }  /* Separate attachment because seams */  ::fill {    polygon-fill: #b1b4b4;    polygon-opacity: 1;  }  /* Remove small lakes at lower zooms */  [scalerank>3][zoom<=5] {    ::fill {      polygon-opacity: 0;    }    line-opacity: 0;  }  [scalerank>6][zoom<=7] {    ::fill {      polygon-opacity: 0;    }    line-opacity: 0;  }}#unified_basemap_layers[layer='ne_10m_rivers_lake_centerlines_2163'] {  line-color: @linecolor;  line-width: 1.5;  line-opacity: 1;  line-join: round;  line-cap: round;  [name='Mississippi'],  [name='St. Lawrence'],  [name='Rio Grande'] {    line-width: 4;  }  [zoom<=8][name='Mississippi'],  [zoom<=8][name='St. Lawrence'],  [zoom<=8][name='Rio Grande'] {    line-width: 2;  }  [zoom<=8][name!='Mississippi'][name!='St. Lawrence'][name!='Rio Grande'],  [zoom<=6][name='Mississippi'],  [zoom<=6][name='Rio Grande'] {    line-width: 1;    line-color: @linecolor;  }  [zoom<=6][name!='Mississippi'][name!='St. Lawrence'][name!='Rio Grande'] {    line-width: 0.5;    line-color: @linecolor;  }  [zoom<=5][name!='Mississippi'][name!='St. Lawrence'][name!='Rio Grande']{    line-width: 0;  }  [zoom<=5][name='Mississippi'],  [zoom<=5][name='St. Lawrence'],  [zoom<=5][name='Rio Grande'] {    line-width: 0.5;    line-color: @linecolor;  }}#unified_basemap_layers[layer='ne_10m_admin_0_countries_lakes_2163'] {  line-color: @land;  line-width: 1;  line-opacity: 1;  line-join: round;  line-cap: round;  polygon-fill: @land;  polygon-opacity: 1;}"
+                      maps_api_template={'https://' + this.props.userId + '.carto.com'}
                     />
-                    <TileLayer src="http://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png" />
+                    <TileLayer src="https://sm.mapstack.stamen.com/openterrain_2163/{z}/{x}/{y}.png" />
                     <GeoJSONLayer featuregroup={cropFeatures} onEachFeature={this.onEachFeatureCrops} />
                     <LeafletHexLayer featuregroup={PopulationStore.getHexbinDataFilteredByDecade(this.state.selectedDecade)}/>
                     <GeoJSONLayer featuregroup={stateFeatures} className="places-states" onClick={this.onGeographicStateClick} />

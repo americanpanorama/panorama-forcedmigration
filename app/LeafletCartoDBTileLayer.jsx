@@ -21,7 +21,8 @@ var LeafletCartoDBTileLayer = React.createClass({
       sublayers: [{
         "sql": this.props.sql,
         "cartocss": this.props.cartocss
-      }]
+      }],
+      "maps_api_template": 'https://' + this.props.userId + '.carto.com'
     },
     function(tiles, err) {
       if(tiles == null) {
